@@ -1,19 +1,144 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="vyaparsathi.Views.AddItemPage"
-             Title="Add Item">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="vyaparsathi.Views.AddItemPage"
+    Title="Add Item"
+    BackgroundColor="#F1F5F9">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
+    <VerticalStackLayout Padding="20" Spacing="20">
 
-        <Entry x:Name="ItemNameEntry"
-               Placeholder="Item Name" />
+        <!-- Header -->
+        <VerticalStackLayout Spacing="4">
+            <Label Text="Add Item"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   TextColor="#1E293B"/>
 
-        <Entry x:Name="ItemPriceEntry"
-               Placeholder="Price"
-               Keyboard="Numeric" />
+            <Label Text="Add or update inventory items"
+                   FontSize="14"
+                   TextColor="#64748B"/>
+        </VerticalStackLayout>
 
-        <Button Text="Save Item" />
+        <!-- Add/Edit Item Form -->
+        <Frame BackgroundColor="White"
+               CornerRadius="16"
+               Padding="16"
+               HasShadow="True">
+            <VerticalStackLayout Spacing="12">
+
+                <Label x:Name="FormTitle" Text="Add New Item" FontSize="22" FontAttributes="Bold"/>
+
+                <!-- Item Name -->
+                <Entry x:Name="ItemNameEntry"
+                       Placeholder="Item Name"
+                       BackgroundColor="#F8FAFC"
+                       HeightRequest="46"/>
+
+                <!-- Category Picker -->
+                <Picker x:Name="CategoryPicker"
+                        Title="Select Category"
+                        BackgroundColor="#F8FAFC"
+                        ItemDisplayBinding="{Binding Name}"/>
+
+                <!-- Landing Price -->
+                <Entry x:Name="LandingPriceEntry"
+                       Placeholder="Landing Price (₹)"
+                       Keyboard="Numeric"
+                       BackgroundColor="#F8FAFC"
+                       HeightRequest="46"/>
+
+                <!-- Selling Price -->
+                <Entry x:Name="SellingPriceEntry"
+                       Placeholder="Selling Price (₹)"
+                       Keyboard="Numeric"
+                       BackgroundColor="#F8FAFC"
+                       HeightRequest="46"/>
+
+                <!-- Stock Quantity -->
+                <Entry x:Name="StockEntry"
+                       Placeholder="Stock Quantity"
+                       Keyboard="Numeric"
+                       BackgroundColor="#F8FAFC"
+                       HeightRequest="46"/>
+
+                <Button x:Name="SaveButton"
+                        Text="Save Item"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="48"
+                        Clicked="OnSaveClicked"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Table Header -->
+        <Grid Padding="10" BackgroundColor="#E2E8F0" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Name" FontAttributes="Bold"/>
+            <Label Text="Category" FontAttributes="Bold" Grid.Column="1"/>
+            <Label Text="Stock" FontAttributes="Bold" Grid.Column="2"/>
+            <Label Text="Landing Price" FontAttributes="Bold" Grid.Column="3"/>
+            <Label Text="Selling Price" FontAttributes="Bold" Grid.Column="4"/>
+            <Label Text="Edit" FontAttributes="Bold" Grid.Column="5"/>
+            <Label Text="Delete" FontAttributes="Bold" Grid.Column="6"/>
+        </Grid>
+
+        <!-- Items List -->
+        <CollectionView x:Name="ItemCollectionView"
+                        SelectionMode="None"
+                        VerticalOptions="FillAndExpand">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,6" Padding="10" BackgroundColor="White" CornerRadius="12">
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Name}" Grid.Column="0" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding CategoryName}" Grid.Column="1" FontSize="13" TextColor="#475569" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding Stock}" Grid.Column="2" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding LandingPrice, StringFormat='₹{0:F2}'}" Grid.Column="3" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding SellingPrice, StringFormat='₹{0:F2}'}" Grid.Column="4" VerticalTextAlignment="Center"/>
+
+                            <Button Text="Edit"
+                                    Grid.Column="5"
+                                    BackgroundColor="#22C55E"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Padding="8,4"
+                                    Clicked="OnEditClicked"
+                                    CommandParameter="{Binding}"/>
+
+                            <Button Text="Delete"
+                                    Grid.Column="6"
+                                    BackgroundColor="#EF4444"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Padding="8,4"
+                                    Clicked="OnDeleteClicked"
+                                    CommandParameter="{Binding}"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
     </VerticalStackLayout>
 </ContentPage>

@@ -1,37 +1,96 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:views="clr-namespace:vyaparsathi.Views"
-       x:Class="vyaparsathi.AppShell">
+<Shell
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:vyaparsathi.Views"
+    x:Class="vyaparsathi.AppShell"
+    FlyoutBehavior="Flyout">
 
-    <!-- Flyout Menu -->
-    <FlyoutItem Title="Dashboard" Icon="home.png">
-        <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Settings" Icon="settings.png">
-        <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Add Category" Icon="category.png">
-        <ShellContent ContentTemplate="{DataTemplate views:AddCategoryPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Add Item" Icon="additem.png">
-        <ShellContent ContentTemplate="{DataTemplate views:AddItemPage}" />
+    <!-- ========================== -->
+    <!-- FLYOUT (Drawer Menu) -->
+    <!-- ========================== -->
+
+    <FlyoutItem
+        Title="Dashboard"
+        Icon="home.png"
+        Route="dashboard">
+        <ShellContent
+            Title="Dashboard"
+            ContentTemplate="{DataTemplate views:DashboardPage}" />
     </FlyoutItem>
 
-    <!-- Bottom Tabs -->
+    <FlyoutItem
+        Title="Billing"
+        Icon="billing.png"
+        Route="billing">
+        <ShellContent
+            ContentTemplate="{DataTemplate views:BillingPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem
+        Title="Udhar"
+        Icon="udhar.png"
+        Route="udhar">
+        <ShellContent
+            ContentTemplate="{DataTemplate views:UdharPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem
+        Title="Stock"
+        Icon="stock.png"
+        Route="stock">
+        <ShellContent
+            ContentTemplate="{DataTemplate views:StockPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem
+        Title="Settings"
+        Icon="settings.png">
+        <ShellContent
+            ContentTemplate="{DataTemplate views:SettingsPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem
+        Title="Master Data"
+        Icon="category.png">
+        <ShellContent
+            Title="Add Category"
+            ContentTemplate="{DataTemplate views:AddCategoryPage}" />
+        <ShellContent
+            Title="Add Item"
+            ContentTemplate="{DataTemplate views:AddItemPage}" />
+    </FlyoutItem>
+
+    <!-- ========================== -->
+    <!-- BOTTOM TAB BAR (Meesho Style) -->
+    <!-- ========================== -->
+
     <TabBar>
-        <Tab Title="Dashboard" Icon="home.png">
-            <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}" />
+
+        <Tab Title="Home" Icon="home.png">
+            <ShellContent
+                Route="homeTab"
+                ContentTemplate="{DataTemplate views:DashboardPage}" />
         </Tab>
+
         <Tab Title="Billing" Icon="billing.png">
-            <ShellContent ContentTemplate="{DataTemplate views:BillingPage}" />
+            <ShellContent
+                Route="billingTab"
+                ContentTemplate="{DataTemplate views:BillingPage}" />
         </Tab>
+
         <Tab Title="Udhar" Icon="udhar.png">
-            <ShellContent ContentTemplate="{DataTemplate views:UdharPage}" />
+            <ShellContent
+                Route="udharTab"
+                ContentTemplate="{DataTemplate views:UdharPage}" />
         </Tab>
+
         <Tab Title="Stock" Icon="stock.png">
-            <ShellContent ContentTemplate="{DataTemplate views:StockPage}" />
+            <ShellContent
+                Route="stockTab"
+                ContentTemplate="{DataTemplate views:StockPage}" />
         </Tab>
+
     </TabBar>
 
 </Shell>

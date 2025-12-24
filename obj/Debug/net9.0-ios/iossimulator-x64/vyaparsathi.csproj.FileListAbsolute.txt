@@ -309,3 +309,4 @@ C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-ios\iossi
 C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-ios\iossimulator-x64\vyaparsathi.pdb
 C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-ios\iossimulator-x64\vyaparsathi.genruntimeconfig.cache
 C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-ios\iossimulator-x64\ref\vyaparsathi.dll
+C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-ios\iossimulator-x64\vyaparsathi.sourcelink.json

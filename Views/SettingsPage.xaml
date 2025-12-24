@@ -1,17 +1,99 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="vyaparsathi.Views.SettingsPage"
-             Title="Settings">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="vyaparsathi.Views.SettingsPage"
+    Title="Settings"
+    BackgroundColor="#F5F6FA">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
 
-        <Label Text="Settings"
-               FontSize="22"
-               FontAttributes="Bold" />
+            <!-- Header -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Settings"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="#1E293B"/>
 
-        <Button Text="Add Category" />
-        <Button Text="Add Item" />
+                <Label Text="Manage your business preferences"
+                       FontSize="14"
+                       TextColor="#64748B"/>
+            </VerticalStackLayout>
 
-    </VerticalStackLayout>
+            <!-- Settings Actions -->
+            <Frame CornerRadius="16"
+                   BackgroundColor="White"
+                   Padding="16"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="14">
+
+                    <!-- Add Category -->
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="📁"
+                               FontSize="22"
+                               VerticalOptions="Center"/>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Add Category"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#1E293B"/>
+                            <Label Text="Create new product categories"
+                                   FontSize="13"
+                                   TextColor="#64748B"/>
+                        </VerticalStackLayout>
+
+                        <Label Text="›"
+                               Grid.Column="2"
+                               FontSize="22"
+                               TextColor="#94A3B8"
+                               VerticalOptions="Center"/>
+                    </Grid>
+
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="#E5E7EB"/>
+
+                    <!-- Add Item -->
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="📦"
+                               FontSize="22"
+                               VerticalOptions="Center"/>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Add Item"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#1E293B"/>
+                            <Label Text="Add new products to inventory"
+                                   FontSize="13"
+                                   TextColor="#64748B"/>
+                        </VerticalStackLayout>
+
+                        <Label Text="›"
+                               Grid.Column="2"
+                               FontSize="22"
+                               TextColor="#94A3B8"
+                               VerticalOptions="Center"/>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

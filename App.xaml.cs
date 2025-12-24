@@ -1,5 +1,4 @@
 ﻿using vyaparsathi.Services;
-using System.IO;
 
 namespace vyaparsathi;
 
@@ -11,8 +10,11 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        // Initialize database
-        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "vyaparsathi.db3");
+        string dbPath = Path.Combine(
+            FileSystem.AppDataDirectory,
+            "vyaparsathi.db3"
+        );
+
         Database = new DatabaseService(dbPath);
 
         MainPage = new AppShell();

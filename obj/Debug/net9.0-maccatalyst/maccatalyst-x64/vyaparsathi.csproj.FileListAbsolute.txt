@@ -299,3 +299,4 @@ C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-maccataly
 C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-maccatalyst\maccatalyst-x64\vyaparsathi.pdb
 C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-maccatalyst\maccatalyst-x64\vyaparsathi.genruntimeconfig.cache
 C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-maccatalyst\maccatalyst-x64\ref\vyaparsathi.dll
+C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-maccatalyst\maccatalyst-x64\vyaparsathi.sourcelink.json

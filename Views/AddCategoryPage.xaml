@@ -1,15 +1,127 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="vyaparsathi.Views.AddCategoryPage"
-             Title="Add Category">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="vyaparsathi.Views.AddCategoryPage"
+    Title="Categories"
+    BackgroundColor="#F1F5F9">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
+    <VerticalStackLayout Padding="20" Spacing="20">
 
-        <Entry x:Name="CategoryNameEntry"
-               Placeholder="Category Name" />
+        <!-- Search Bar -->
+        <Entry x:Name="SearchEntry"
+               Placeholder="Search categories..."
+               TextChanged="OnSearchTextChanged"
+               BackgroundColor="#F8FAFC"
+               HeightRequest="44"
+               ClearButtonVisibility="WhileEditing"/>
 
-        <Button Text="Save Category" />
+        <!-- Add/Edit Category Card -->
+        <Frame BackgroundColor="White"
+               CornerRadius="16"
+               Padding="16"
+               HasShadow="True">
+
+            <VerticalStackLayout Spacing="12">
+
+                <Label x:Name="FormTitle"
+                       Text="Add Category"
+                       FontSize="22"
+                       FontAttributes="Bold" />
+
+                <Entry x:Name="CategoryNameEntry"
+                       Placeholder="Category Name"
+                       HeightRequest="46"
+                       BackgroundColor="#F8FAFC"/>
+
+                <Editor x:Name="CategoryDescriptionEditor"
+                        Placeholder="Description (optional)"
+                        HeightRequest="80"
+                        BackgroundColor="#F8FAFC"/>
+
+                <Button x:Name="SaveButton"
+                        Text="Save Category"
+                        Clicked="OnSaveClicked"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="48"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Table Header -->
+        <Grid Padding="10" BackgroundColor="#E2E8F0" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Name" FontAttributes="Bold" />
+            <Label Text="Description" FontAttributes="Bold" Grid.Column="1"/>
+            <Label Text="Created" FontAttributes="Bold" Grid.Column="2"/>
+            <Label Text="Edit" FontAttributes="Bold" Grid.Column="3"/>
+            <Label Text="Delete" FontAttributes="Bold" Grid.Column="4"/>
+        </Grid>
+
+        <!-- Category List -->
+        <CollectionView x:Name="CategoryCollectionView"
+                        SelectionMode="None"
+                        VerticalOptions="FillAndExpand">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,6"
+                           Padding="10"
+                           BackgroundColor="White"
+                           CornerRadius="12">
+
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Name}" Grid.Column="0"
+                                   FontAttributes="Bold" VerticalTextAlignment="Center"/>
+
+                            <Label Text="{Binding Description}" Grid.Column="1"
+                                   FontSize="13" TextColor="#475569" VerticalTextAlignment="Center"/>
+
+                            <Label Text="{Binding CreatedAt, StringFormat='{0:dd MMM yyyy}'}"
+                                   Grid.Column="2"
+                                   VerticalTextAlignment="Center"/>
+
+                            <!-- Edit Button -->
+                            <Button Text="Edit"
+                                    Grid.Column="3"
+                                    BackgroundColor="#22C55E"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Padding="8,4"
+                                    Clicked="OnEditClicked"
+                                    CommandParameter="{Binding}"/>
+
+                            <!-- Delete Button -->
+                            <Button Text="Delete"
+                                    Grid.Column="4"
+                                    BackgroundColor="#EF4444"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Padding="8,4"
+                                    Clicked="OnDeleteClicked"
+                                    CommandParameter="{Binding}"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
 
     </VerticalStackLayout>
 </ContentPage>

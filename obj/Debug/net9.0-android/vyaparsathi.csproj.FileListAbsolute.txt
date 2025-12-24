@@ -944,3 +944,4 @@ C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-android\s
 C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-android\stamp\_GenerateJavaStubs.stamp
 C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-android\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\johndeo\source\repos\vyaparsathi\vyaparsathi\obj\Debug\net9.0-android\vyaparsathi.sourcelink.json
