@@ -3,158 +3,144 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="vyaparsathi.Views.StockPage"
-    Title="Stock"
+    Title="Stock Management"
     BackgroundColor="#F1F5F9">
 
-    <VerticalStackLayout Padding="20" Spacing="20">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
 
-        <!-- Header -->
-        <VerticalStackLayout Spacing="4">
-            <Label Text="Stock Dashboard"
-                   FontSize="26"
-                   FontAttributes="Bold"
-                   TextColor="#1E293B"/>
-
-            <Label Text="Manage inventory and track stock levels"
-                   FontSize="14"
-                   TextColor="#64748B"/>
-        </VerticalStackLayout>
-
-        <!-- Summary Cards -->
-        <HorizontalStackLayout Spacing="12" HorizontalOptions="FillAndExpand">
-
-            <Frame BackgroundColor="#2563EB" CornerRadius="16" Padding="16" HorizontalOptions="FillAndExpand">
-                <VerticalStackLayout>
-                    <Label Text="Total Items" FontAttributes="Bold" TextColor="White"/>
-                    <Label x:Name="TotalItemsLabel" Text="0" FontSize="24" FontAttributes="Bold" TextColor="White"/>
-                </VerticalStackLayout>
-            </Frame>
-
-            <Frame BackgroundColor="#22C55E" CornerRadius="16" Padding="16" HorizontalOptions="FillAndExpand">
-                <VerticalStackLayout>
-                    <Label Text="Total Stock" FontAttributes="Bold" TextColor="White"/>
-                    <Label x:Name="TotalStockLabel" Text="0" FontSize="24" FontAttributes="Bold" TextColor="White"/>
-                </VerticalStackLayout>
-            </Frame>
-
-            <Frame BackgroundColor="#F59E0B" CornerRadius="16" Padding="16" HorizontalOptions="FillAndExpand">
-                <VerticalStackLayout>
-                    <Label Text="Total Value (₹)" FontAttributes="Bold" TextColor="White"/>
-                    <Label x:Name="TotalValueLabel" Text="0" FontSize="24" FontAttributes="Bold" TextColor="White"/>
-                </VerticalStackLayout>
-            </Frame>
-
-        </HorizontalStackLayout>
-
-        <!-- Add/Edit Stock Card -->
-        <Frame BackgroundColor="White"
-               CornerRadius="16"
-               Padding="16"
-               HasShadow="True">
-
-            <VerticalStackLayout Spacing="12">
-
-                <Label x:Name="FormTitle" Text="Add Stock Item" FontSize="22" FontAttributes="Bold"/>
-
-                <Picker x:Name="ItemPicker" Title="Select Item" ItemDisplayBinding="{Binding Name}" BackgroundColor="#F8FAFC"/>
-
-                <Entry x:Name="StockQuantityEntry"
-                       Placeholder="Quantity"
-                       Keyboard="Numeric"
-                       HeightRequest="46"
-                       BackgroundColor="#F8FAFC"/>
-
-                <Entry x:Name="StockPriceEntry"
-                       Placeholder="Price per Unit (₹)"
-                       Keyboard="Numeric"
-                       HeightRequest="46"
-                       BackgroundColor="#F8FAFC"/>
-
-                <Button x:Name="SaveButton"
-                        Text="Save Stock Item"
-                        Clicked="OnSaveClicked"
-                        BackgroundColor="#2563EB"
-                        TextColor="White"
-                        CornerRadius="12"
-                        HeightRequest="48"/>
+            <!-- Header -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Stock Dashboard"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="#1E293B"/>
+                <Label Text="Manage inventory and track stock"
+                       FontSize="14"
+                       TextColor="#64748B"/>
             </VerticalStackLayout>
-        </Frame>
 
-        <!-- Table Header -->
-        <Grid Padding="10" BackgroundColor="#E2E8F0" ColumnSpacing="12">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1.5*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+            <!-- Pickers -->
+            <HorizontalStackLayout Spacing="12">
+                <Picker x:Name="ItemPicker"
+                        Title="Select Item"
+                        ItemDisplayBinding="{Binding Name}"
+                        BackgroundColor="#F8FAFC"
+                        HeightRequest="48"
+                        HorizontalOptions="FillAndExpand"/>
 
-            <Label Text="Item" FontAttributes="Bold" />
-            <Label Text="Category" FontAttributes="Bold" Grid.Column="1"/>
-            <Label Text="Quantity" FontAttributes="Bold" Grid.Column="2"/>
-            <Label Text="Unit Price" FontAttributes="Bold" Grid.Column="3"/>
-            <Label Text="Total Value" FontAttributes="Bold" Grid.Column="4"/>
-            <Label Text="Edit" FontAttributes="Bold" Grid.Column="5"/>
-            <Label Text="Delete" FontAttributes="Bold" Grid.Column="6"/>
-        </Grid>
+                <Picker x:Name="CategoryPicker"
+                        Title="Select Category"
+                        ItemDisplayBinding="{Binding Name}"
+                        BackgroundColor="#F8FAFC"
+                        HeightRequest="48"
+                        HorizontalOptions="FillAndExpand"/>
+            </HorizontalStackLayout>
 
-        <!-- Stock Items List -->
-        <CollectionView x:Name="StockCollectionView"
-                        SelectionMode="None"
-                        VerticalOptions="FillAndExpand">
+            <!-- Add / Update Stock Form -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="16"
+                   Padding="16"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Update Stock" FontSize="20" FontAttributes="Bold"/>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Margin="0,6"
-                           Padding="10"
-                           BackgroundColor="White"
-                           CornerRadius="12">
+                    <Entry x:Name="StockQuantityEntry"
+                           Placeholder="Quantity"
+                           Keyboard="Numeric"
+                           BackgroundColor="#F8FAFC"
+                           HeightRequest="46"/>
 
-                        <Grid ColumnSpacing="12">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1.5*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                    <Entry x:Name="StockPriceEntry"
+                           Placeholder="Price per Unit (₹)"
+                           Keyboard="Numeric"
+                           BackgroundColor="#F8FAFC"
+                           HeightRequest="46"/>
 
-                            <Label Text="{Binding Item.Name}" Grid.Column="0" FontAttributes="Bold" VerticalTextAlignment="Center"/>
-                            <Label Text="{Binding Item.CategoryName}" Grid.Column="1" FontSize="13" TextColor="#475569" VerticalTextAlignment="Center"/>
-                            <Label Text="{Binding Quantity}" Grid.Column="2" VerticalTextAlignment="Center"/>
-                            <Label Text="{Binding UnitPrice, StringFormat='₹{0:F2}'}" Grid.Column="3" VerticalTextAlignment="Center"/>
-                            <Label Text="{Binding TotalValue, StringFormat='₹{0:F2}'}" Grid.Column="4" VerticalTextAlignment="Center"/>
+                    <Button x:Name="SaveStockButton"
+                            Text="Save Stock"
+                            BackgroundColor="#2563EB"
+                            TextColor="White"
+                            CornerRadius="12"
+                            HeightRequest="48"
+                            Clicked="OnSaveStockClicked"/>
+                </VerticalStackLayout>
+            </Frame>
 
-                            <!-- Edit -->
-                            <Button Text="Edit"
-                                    Grid.Column="5"
-                                    BackgroundColor="#22C55E"
-                                    TextColor="White"
-                                    CornerRadius="10"
-                                    Padding="8,4"
-                                    Clicked="OnEditClicked"
-                                    CommandParameter="{Binding}"/>
+            <!-- Dashboard Summary -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="16"
+                   Padding="16"
+                   HasShadow="True">
+                <Grid ColumnSpacing="12" RowSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                            <!-- Delete -->
-                            <Button Text="Delete"
-                                    Grid.Column="6"
-                                    BackgroundColor="#EF4444"
-                                    TextColor="White"
-                                    CornerRadius="10"
-                                    Padding="8,4"
-                                    Clicked="OnDeleteClicked"
-                                    CommandParameter="{Binding}"/>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                    <Label Text="Total Items:" FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
+                    <Label x:Name="TotalItemsLabel" Grid.Row="0" Grid.Column="1"/>
 
-        </CollectionView>
+                    <Label Text="Total Stock:" FontAttributes="Bold" Grid.Row="1" Grid.Column="0"/>
+                    <Label x:Name="TotalStockLabel" Grid.Row="1" Grid.Column="1"/>
 
-    </VerticalStackLayout>
+                    <Label Text="Total Value (₹):" FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
+                    <Label x:Name="TotalValueLabel" Grid.Row="2" Grid.Column="1"/>
+                </Grid>
+            </Frame>
+
+            <!-- CollectionView: All Stock Items -->
+            <CollectionView x:Name="StockCollectionView"
+                            SelectionMode="None"
+                            VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,6" Padding="10" BackgroundColor="White" CornerRadius="12">
+                            <Grid ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding Name}" Grid.Column="0" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                                <Label Text="{Binding CategoryName}" Grid.Column="1" FontSize="13" TextColor="#475569" VerticalTextAlignment="Center"/>
+                                <Label Text="{Binding Stock}" Grid.Column="2" VerticalTextAlignment="Center"/>
+                                <Label Text="{Binding LandingPrice, StringFormat='₹{0:F2}'}" Grid.Column="3" VerticalTextAlignment="Center"/>
+                                <Label Text="{Binding SellingPrice, StringFormat='₹{0:F2}'}" Grid.Column="4" VerticalTextAlignment="Center"/>
+
+                                <Button Text="Edit"
+                                        Grid.Column="5"
+                                        BackgroundColor="#22C55E"
+                                        TextColor="White"
+                                        CornerRadius="10"
+                                        Padding="8,4"
+                                        Clicked="OnEditStockClicked"
+                                        CommandParameter="{Binding}"/>
+
+                                <Button Text="Delete"
+                                        Grid.Column="6"
+                                        BackgroundColor="#EF4444"
+                                        TextColor="White"
+                                        CornerRadius="10"
+                                        Padding="8,4"
+                                        Clicked="OnDeleteStockClicked"
+                                        CommandParameter="{Binding}"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

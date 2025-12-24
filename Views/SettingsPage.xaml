@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="vyaparsathi.Views.SettingsPage"
     Title="Settings"
-    BackgroundColor="#F5F6FA">
+    BackgroundColor="#F1F5F9">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
@@ -15,79 +15,118 @@
                        FontSize="26"
                        FontAttributes="Bold"
                        TextColor="#1E293B"/>
-
                 <Label Text="Manage your business preferences"
                        FontSize="14"
                        TextColor="#64748B"/>
             </VerticalStackLayout>
 
-            <!-- Settings Actions -->
-            <Frame CornerRadius="16"
-                   BackgroundColor="White"
+            <!-- Business Profile Section -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="16"
                    Padding="16"
                    HasShadow="True">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Business Profile"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B"/>
+                    <Entry x:Name="BusinessNameEntry"
+                           Placeholder="Business Name"
+                           BackgroundColor="#F8FAFC"
+                           HeightRequest="46"/>
+                    <Entry x:Name="OwnerNameEntry"
+                           Placeholder="Owner Name"
+                           BackgroundColor="#F8FAFC"
+                           HeightRequest="46"/>
+                    <Entry x:Name="PhoneEntry"
+                           Placeholder="Phone Number"
+                           Keyboard="Telephone"
+                           BackgroundColor="#F8FAFC"
+                           HeightRequest="46"/>
+                    <Entry x:Name="WhatsAppEntry"
+                           Placeholder="WhatsApp Number"
+                           Keyboard="Telephone"
+                           BackgroundColor="#F8FAFC"
+                           HeightRequest="46"/>
+                    <Button Text="Save Profile"
+                            BackgroundColor="#2563EB"
+                            TextColor="White"
+                            CornerRadius="12"
+                            HeightRequest="48"
+                            Clicked="OnSaveProfileClicked"/>
+                </VerticalStackLayout>
+            </Frame>
 
+            <!-- Navigation / Actions -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="16"
+                   Padding="16"
+                   HasShadow="True">
                 <VerticalStackLayout Spacing="14">
 
                     <!-- Add Category -->
                     <Grid ColumnSpacing="12">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Text="📁"
-                               FontSize="22"
-                               VerticalOptions="Center"/>
-
+                        <Label Text="📁" FontSize="22" VerticalOptions="Center"/>
                         <VerticalStackLayout Grid.Column="1" Spacing="2">
-                            <Label Text="Add Category"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="#1E293B"/>
-                            <Label Text="Create new product categories"
-                                   FontSize="13"
-                                   TextColor="#64748B"/>
+                            <Label Text="Add Category" FontSize="16" FontAttributes="Bold" TextColor="#1E293B"/>
+                            <Label Text="Create new product categories" FontSize="13" TextColor="#64748B"/>
                         </VerticalStackLayout>
+                        <Label Text="›" Grid.Column="2" FontSize="22" TextColor="#94A3B8" VerticalOptions="Center"/>
 
-                        <Label Text="›"
-                               Grid.Column="2"
-                               FontSize="22"
-                               TextColor="#94A3B8"
-                               VerticalOptions="Center"/>
+                        <!-- Only ONE GestureRecognizer -->
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAddCategoryTapped"/>
+                        </Grid.GestureRecognizers>
                     </Grid>
 
-                    <BoxView HeightRequest="1"
-                             BackgroundColor="#E5E7EB"/>
+                    <BoxView HeightRequest="1" BackgroundColor="#E5E7EB"/>
 
                     <!-- Add Item -->
                     <Grid ColumnSpacing="12">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Text="📦"
-                               FontSize="22"
-                               VerticalOptions="Center"/>
-
+                        <Label Text="📦" FontSize="22" VerticalOptions="Center"/>
                         <VerticalStackLayout Grid.Column="1" Spacing="2">
-                            <Label Text="Add Item"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="#1E293B"/>
-                            <Label Text="Add new products to inventory"
-                                   FontSize="13"
-                                   TextColor="#64748B"/>
+                            <Label Text="Add Item" FontSize="16" FontAttributes="Bold" TextColor="#1E293B"/>
+                            <Label Text="Add new products to inventory" FontSize="13" TextColor="#64748B"/>
                         </VerticalStackLayout>
+                        <Label Text="›" Grid.Column="2" FontSize="22" TextColor="#94A3B8" VerticalOptions="Center"/>
 
-                        <Label Text="›"
-                               Grid.Column="2"
-                               FontSize="22"
-                               TextColor="#94A3B8"
-                               VerticalOptions="Center"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAddItemTapped"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+
+                    <BoxView HeightRequest="1" BackgroundColor="#E5E7EB"/>
+
+                    <!-- WhatsApp Message -->
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="💬" FontSize="22" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Send WhatsApp Message" FontSize="16" FontAttributes="Bold" TextColor="#1E293B"/>
+                            <Label Text="Message your customers or suppliers" FontSize="13" TextColor="#64748B"/>
+                        </VerticalStackLayout>
+                        <Label Text="›" Grid.Column="2" FontSize="22" TextColor="#94A3B8" VerticalOptions="Center"/>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSendWhatsAppTapped"/>
+                        </Grid.GestureRecognizers>
                     </Grid>
 
                 </VerticalStackLayout>
@@ -95,5 +134,4 @@
 
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

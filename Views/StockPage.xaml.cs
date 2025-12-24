@@ -5,8 +5,10 @@ namespace vyaparsathi.Views;
 
 public partial class StockPage : ContentPage
 {
-    private List<Item> _allItems;
-    private StockViewModel _editingStock;
+    private List<Category> _categories;
+    private List<Item> _items;
+    private List<ItemViewModel> _itemViewModels;
+    private Item _editingItem;
 
     public StockPage()
     {
@@ -16,85 +18,98 @@ public partial class StockPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await LoadItems();
+
+        _categories = await App.Database.GetCategoriesAsync();
+        _items = await App.Database.GetItemsAsync();
+
+        // Bind Pickers
+        ItemPicker.ItemsSource = _items;
+        ItemPicker.ItemDisplayBinding = new Binding("Name");
+
+        CategoryPicker.ItemsSource = _categories;
+        CategoryPicker.ItemDisplayBinding = new Binding("Name");
+
+        BuildItemViewModels();
         UpdateSummary();
     }
 
-    private async Task LoadItems()
+    private void BuildItemViewModels()
     {
-        _allItems = await App.Database.GetItemsAsync();
+        _itemViewModels = (from item in _items
+                           join cat in _categories
+                           on item.CategoryId equals cat.Id
+                           select new ItemViewModel(item, cat.Name))
+                          .ToList();
 
-        var stockItems = _allItems.Select(i => new StockViewModel
-        {
-            Item = i,
-            Quantity = i.Stock,
-            UnitPrice = i.SellingPrice
-        }).ToList();
-
-        StockCollectionView.ItemsSource = stockItems;
-        UpdateSummary();
+        StockCollectionView.ItemsSource = _itemViewModels;
     }
 
     private void UpdateSummary()
     {
-        int totalItems = _allItems.Count;
-        int totalStock = _allItems.Sum(i => i.Stock);
-        decimal totalValue = _allItems.Sum(i => i.Stock * i.SellingPrice);
-
-        TotalItemsLabel.Text = totalItems.ToString();
-        TotalStockLabel.Text = totalStock.ToString();
-        TotalValueLabel.Text = totalValue.ToString("F2");
+        TotalItemsLabel.Text = _items.Count.ToString();
+        TotalStockLabel.Text = _items.Sum(i => i.Stock).ToString();
+        TotalValueLabel.Text = _items.Sum(i => i.Stock * i.SellingPrice).ToString("F2");
     }
 
-    private async void OnSaveClicked(object sender, EventArgs e)
+    // Save / Update Stock
+    private async void OnSaveStockClicked(object sender, EventArgs e)
     {
         if (ItemPicker.SelectedItem == null ||
-            !int.TryParse(StockQuantityEntry.Text, out int quantity) ||
+            !int.TryParse(StockQuantityEntry.Text, out int stock) ||
             !decimal.TryParse(StockPriceEntry.Text, out decimal price))
         {
-            await DisplayAlert("Error", "Please fill all fields correctly", "OK");
+            await DisplayAlert("Error", "Select an item and enter valid stock/price.", "OK");
             return;
         }
 
-        var item = (Item)ItemPicker.SelectedItem;
+        var selectedItem = ItemPicker.SelectedItem as Item;
 
-        item.Stock = quantity;
-        item.SellingPrice = price;
-        item.UpdatedAt = DateTime.UtcNow;
+        selectedItem.Stock = stock;
+        selectedItem.SellingPrice = price;
 
-        await App.Database.SaveItemAsync(item);
+        await App.Database.SaveItemAsync(selectedItem);
 
-        // Clear
+        ClearStockForm();
+        _items = await App.Database.GetItemsAsync();
+        BuildItemViewModels();
+        UpdateSummary();
+    }
+
+    private void ClearStockForm()
+    {
+        ItemPicker.SelectedIndex = -1;
         StockQuantityEntry.Text = "";
         StockPriceEntry.Text = "";
-        ItemPicker.SelectedIndex = -1;
-
-        await LoadItems();
     }
 
-    private async void OnDeleteClicked(object sender, EventArgs e)
+    // Edit Stock
+    private void OnEditStockClicked(object sender, EventArgs e)
     {
         var button = sender as Button;
-        var stock = button?.CommandParameter as StockViewModel;
-        if (stock == null) return;
+        var vm = button?.CommandParameter as ItemViewModel;
+        if (vm == null) return;
 
-        bool confirm = await DisplayAlert("Delete Stock", $"Delete '{stock.Item.Name}'?", "Delete", "Cancel");
+        _editingItem = vm.Item;
+        ItemPicker.SelectedItem = _editingItem;
+        StockQuantityEntry.Text = _editingItem.Stock.ToString();
+        StockPriceEntry.Text = _editingItem.SellingPrice.ToString();
+    }
+
+    // Delete Stock
+    private async void OnDeleteStockClicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        var vm = button?.CommandParameter as ItemViewModel;
+        if (vm == null) return;
+
+        bool confirm = await DisplayAlert("Delete Item", $"Delete '{vm.Name}'?", "Delete", "Cancel");
         if (!confirm) return;
 
-        await App.Database.DeleteItemAsync(stock.Item);
-        await LoadItems();
-    }
-
-    private void OnEditClicked(object sender, EventArgs e)
-    {
-        var button = sender as Button;
-        var stock = button?.CommandParameter as StockViewModel;
-        if (stock == null) return;
-
-        ItemPicker.SelectedItem = stock.Item;
-        StockQuantityEntry.Text = stock.Quantity.ToString();
-        StockPriceEntry.Text = stock.UnitPrice.ToString();
-        FormTitle.Text = "Edit Stock Item";
-        SaveButton.Text = "Update Stock";
+        await App.Database.DeleteItemAsync(vm.Item);
+        _items = await App.Database.GetItemsAsync();
+        BuildItemViewModels();
+        UpdateSummary();
     }
 }
+
+

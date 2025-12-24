@@ -9,7 +9,8 @@ public class Bill
 
     public string CustomerName { get; set; }
 
-    public decimal Amount { get; set; }
-
     public DateTime Date { get; set; }
+
+    [Ignore] // Not stored in DB, calculated on the fly
+    public decimal TotalAmount { get; set; }
 }
