@@ -4,50 +4,60 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:vyaparsathi.Views"
     x:Class="vyaparsathi.AppShell"
-    FlyoutBehavior="Flyout">
+    FlyoutBehavior="Flyout"
+    Shell.TabBarBackgroundColor="#FFFFFF"
+    Shell.TabBarForegroundColor="#111827"
+    Shell.TabBarUnselectedColor="#6B7280"
+    Shell.TabBarTitleColor="#111827">
 
     <!-- ========================== -->
-    <!-- FLYOUT HEADER WITH PROFILE -->
+    <!-- FLYOUT HEADER: PROFILE -->
     <!-- ========================== -->
     <Shell.FlyoutHeader>
-        <Grid Padding="16" BackgroundColor="#2563EB" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
-            <Frame WidthRequest="60" HeightRequest="60" CornerRadius="30" BackgroundColor="White" VerticalOptions="Center">
-                <Label Text="👤" HorizontalOptions="Center" VerticalOptions="Center" FontSize="28"/>
+        <Grid Padding="20" BackgroundColor="#2563EB" HeightRequest="140">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Profile Image -->
+            <Frame CornerRadius="40" HeightRequest="80" WidthRequest="80" BackgroundColor="White" HasShadow="True">
+                <Image Source="profile_placeholder.png" Aspect="AspectFill"/>
             </Frame>
-            <VerticalStackLayout Grid.Column="1" Padding="12,0" VerticalOptions="Center">
-                <Label x:Name="FlyoutBusinessName" Text="Business Name" TextColor="White" FontAttributes="Bold" FontSize="18"/>
-                <Label x:Name="FlyoutOwnerName" Text="Owner Name" TextColor="White" FontSize="14"/>
+
+            <!-- Profile Info -->
+            <VerticalStackLayout Grid.Column="1" Padding="10" VerticalOptions="Center">
+                <Label Text="Vyaparsathi" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                <Label Text="Manage your business efficiently" FontSize="14" TextColor="#E0E7FF"/>
             </VerticalStackLayout>
         </Grid>
     </Shell.FlyoutHeader>
 
     <!-- ========================== -->
-    <!-- FLYOUT ITEMS (Drawer Menu) -->
+    <!-- FLYOUT ITEMS -->
     <!-- ========================== -->
-
-    <FlyoutItem Title="Dashboard" Icon="home.png" Route="dashboard">
+    <FlyoutItem Title="Dashboard" Icon="home.png">
         <ShellContent Title="Dashboard" ContentTemplate="{DataTemplate views:DashboardPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Billing" Icon="billing.png" Route="billing">
-        <ShellContent ContentTemplate="{DataTemplate views:BillingPage}" />
+    <FlyoutItem Title="Billing" Icon="billing.png">
+        <ShellContent Title="Create Bill" ContentTemplate="{DataTemplate views:BillingPage}" />
+        <ShellContent Title="Billing History" ContentTemplate="{DataTemplate views:BillingHistoryPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Udhar" Icon="udhar.png" Route="udhar">
-        <ShellContent ContentTemplate="{DataTemplate views:UdharPage}" />
+    <FlyoutItem Title="Udhar / Credit" Icon="udhar.png">
+        <ShellContent Title="Udhar Entry" ContentTemplate="{DataTemplate views:UdharPage}" />
+        <ShellContent Title="Customers" ContentTemplate="{DataTemplate views:CustomersPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Stock" Icon="stock.png" Route="stock">
-        <ShellContent ContentTemplate="{DataTemplate views:StockPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Settings" Icon="settings.png" Route="settings">
-        <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Master Data" Icon="category.png">
+    <FlyoutItem Title="Stock Management" Icon="stock.png">
+        <ShellContent Title="Stock" ContentTemplate="{DataTemplate views:StockPage}" />
         <ShellContent Title="Add Category" ContentTemplate="{DataTemplate views:AddCategoryPage}" />
         <ShellContent Title="Add Item" ContentTemplate="{DataTemplate views:AddItemPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Settings" Icon="settings.png">
+        <ShellContent Title="Settings" ContentTemplate="{DataTemplate views:SettingsPage}" />
     </FlyoutItem>
 
     <!-- ========================== -->
@@ -57,18 +67,35 @@
         <Tab Title="Home" Icon="home.png">
             <ShellContent Route="homeTab" ContentTemplate="{DataTemplate views:DashboardPage}" />
         </Tab>
-
         <Tab Title="Billing" Icon="billing.png">
             <ShellContent Route="billingTab" ContentTemplate="{DataTemplate views:BillingPage}" />
         </Tab>
-
         <Tab Title="Udhar" Icon="udhar.png">
             <ShellContent Route="udharTab" ContentTemplate="{DataTemplate views:UdharPage}" />
         </Tab>
-
         <Tab Title="Stock" Icon="stock.png">
             <ShellContent Route="stockTab" ContentTemplate="{DataTemplate views:StockPage}" />
         </Tab>
     </TabBar>
+
+    <!-- ========================== -->
+    <!-- GLOBAL STYLES -->
+    <!-- ========================== -->
+    <Shell.Resources>
+        <ResourceDictionary>
+            <!-- Flyout Item Style -->
+            <Style TargetType="FlyoutItem">
+                <Setter Property="Shell.BackgroundColor" Value="White"/>
+                <Setter Property="Shell.ForegroundColor" Value="#111827"/>
+                <Setter Property="Shell.TitleColor" Value="#111827"/>
+            </Style>
+
+            <Style TargetType="Tab">
+                <Setter Property="Shell.TabBarBackgroundColor" Value="#FFFFFF"/>
+                <Setter Property="Shell.TabBarForegroundColor" Value="#111827"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#6B7280"/>
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
 
 </Shell>

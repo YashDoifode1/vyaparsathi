@@ -7,22 +7,22 @@
     BackgroundColor="#F5F6FA">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+        <VerticalStackLayout Padding="20" Spacing="22">
 
             <!-- Header -->
-            <VerticalStackLayout Spacing="4">
+            <VerticalStackLayout Spacing="2">
                 <Label Text="VyaparSathi"
-                       FontSize="26"
+                       FontSize="28"
                        FontAttributes="Bold"
-                       TextColor="#1E293B"/>
+                       TextColor="#111827"/>
 
                 <Label Text="Business Overview"
                        FontSize="14"
-                       TextColor="#64748B"/>
+                       TextColor="#6B7280"/>
             </VerticalStackLayout>
 
-            <!-- Stats Cards -->
-            <Grid ColumnSpacing="12" RowSpacing="12">
+            <!-- KPI Cards -->
+            <Grid ColumnSpacing="14" RowSpacing="14">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -38,12 +38,13 @@
                        BackgroundColor="White"
                        Padding="16"
                        HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
+                    <VerticalStackLayout>
                         <Label Text="Today's Sales"
                                FontSize="13"
-                               TextColor="#64748B"/>
-                        <Label Text="₹0"
-                               FontSize="22"
+                               TextColor="#6B7280"/>
+                        <Label x:Name="TodaySalesLabel"
+                               Text="₹0"
+                               FontSize="24"
                                FontAttributes="Bold"
                                TextColor="#16A34A"/>
                     </VerticalStackLayout>
@@ -55,51 +56,73 @@
                        BackgroundColor="White"
                        Padding="16"
                        HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
+                    <VerticalStackLayout>
                         <Label Text="Total Udhar"
                                FontSize="13"
-                               TextColor="#64748B"/>
-                        <Label Text="₹0"
-                               FontSize="22"
+                               TextColor="#6B7280"/>
+                        <Label x:Name="TotalUdharLabel"
+                               Text="₹0"
+                               FontSize="24"
                                FontAttributes="Bold"
                                TextColor="#DC2626"/>
                     </VerticalStackLayout>
                 </Frame>
 
                 <!-- Low Stock -->
-                <Frame Grid.Row="1" Grid.ColumnSpan="2"
+                <Frame Grid.Row="1" Grid.Column="0"
                        CornerRadius="16"
                        BackgroundColor="White"
                        Padding="16"
                        HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
+                    <VerticalStackLayout>
                         <Label Text="Low Stock Items"
                                FontSize="13"
-                               TextColor="#64748B"/>
-                        <Label Text="0 Items"
-                               FontSize="22"
+                               TextColor="#6B7280"/>
+                        <Label x:Name="LowStockLabel"
+                               Text="0"
+                               FontSize="24"
                                FontAttributes="Bold"
                                TextColor="#F59E0B"/>
                     </VerticalStackLayout>
                 </Frame>
+
+                <!-- Total Products -->
+                <Frame Grid.Row="1" Grid.Column="1"
+                       CornerRadius="16"
+                       BackgroundColor="White"
+                       Padding="16"
+                       HasShadow="True">
+                    <VerticalStackLayout>
+                        <Label Text="Total Products"
+                               FontSize="13"
+                               TextColor="#6B7280"/>
+                        <Label x:Name="TotalProductsLabel"
+                               Text="0"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#2563EB"/>
+                    </VerticalStackLayout>
+                </Frame>
             </Grid>
 
-            <!-- Actions -->
-            <VerticalStackLayout Spacing="12">
+            <!-- Quick Actions -->
+            <VerticalStackLayout Spacing="14">
 
                 <Button Text="➕ Create New Bill"
                         BackgroundColor="#2563EB"
                         TextColor="White"
                         FontAttributes="Bold"
                         CornerRadius="14"
-                        HeightRequest="50"/>
+                        HeightRequest="52"
+                        Clicked="OnCreateBillClicked"/>
 
-                <Button Text="📦 View Stock"
+                <Button Text="📦 Manage Stock"
                         BackgroundColor="#E5E7EB"
-                        TextColor="#1E293B"
+                        TextColor="#111827"
                         FontAttributes="Bold"
                         CornerRadius="14"
-                        HeightRequest="50"/>
+                        HeightRequest="52"
+                        Clicked="OnStockClicked"/>
             </VerticalStackLayout>
 
         </VerticalStackLayout>

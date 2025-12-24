@@ -18,6 +18,8 @@ public class DatabaseService
         _database.CreateTableAsync<BillItem>().Wait();
         _database.CreateTableAsync<Udhar>().Wait();
         _database.CreateTableAsync<BusinessProfile>().Wait();
+        _database.CreateTableAsync<Customer>().Wait();
+
     }
 
     // =======================
@@ -91,16 +93,38 @@ public class DatabaseService
     // =======================
     // UDHAR
     // =======================
+    // Save Udhar
+    // =======================
+    // UDHAR
+    // =======================
     public Task<int> SaveUdharAsync(Udhar udhar)
     {
         if (udhar.Id != 0)
             return _database.UpdateAsync(udhar);
 
+        udhar.Date = DateTime.UtcNow;
         return _database.InsertAsync(udhar);
     }
 
-    public Task<List<Udhar>> GetUdharsAsync() =>
-        _database.Table<Udhar>().ToListAsync();
+    public async Task<List<Udhar>> GetUdharsAsync()
+    {
+        var udhars = await _database.Table<Udhar>().OrderByDescending(u => u.Date).ToListAsync();
+        var customers = await GetCustomersAsync();
+
+        foreach (var u in udhars)
+        {
+            u.CustomerName = customers.FirstOrDefault(c => c.Id == u.CustomerId)?.Name ?? "Unknown";
+        }
+
+        return udhars;
+    }
+
+    // Delete Udhar
+    public Task<int> DeleteUdharAsync(Udhar udhar)
+    {
+        return _database.DeleteAsync(udhar);
+    }
+
 
     // =======================
     // BUSINESS PROFILE
@@ -118,4 +142,27 @@ public class DatabaseService
 
     public Task<BusinessProfile> GetBusinessProfileAsync() =>
         _database.Table<BusinessProfile>().FirstOrDefaultAsync();
+
+    // =======================
+    // CUSTOMERS
+    // =======================
+    public Task<int> SaveCustomerAsync(Customer customer)
+    {
+        customer.UpdatedAt = DateTime.UtcNow;
+        if (customer.Id != 0)
+            return _database.UpdateAsync(customer);
+
+        customer.CreatedAt = DateTime.UtcNow;
+        return _database.InsertAsync(customer);
+    }
+
+    public Task<List<Customer>> GetCustomersAsync() =>
+        _database.Table<Customer>()
+                 .OrderByDescending(c => c.CreatedAt)
+                 .ToListAsync();
+
+    public Task<int> DeleteCustomerAsync(Customer customer) =>
+        _database.DeleteAsync(customer);
+
+
 }

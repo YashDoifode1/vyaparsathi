@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="vyaparsathi.Views.CustomersPage"
+    Title="Customers"
+    BackgroundColor="#F5F6FA">
+
+    <VerticalStackLayout Padding="20" Spacing="20">
+
+        <!-- Header -->
+        <VerticalStackLayout Spacing="4">
+            <Label Text="Customers" FontSize="26" FontAttributes="Bold" TextColor="#1E293B"/>
+            <Label Text="Manage your customers" FontSize="14" TextColor="#64748B"/>
+        </VerticalStackLayout>
+
+        <!-- Form -->
+        <Frame CornerRadius="16" BackgroundColor="White" Padding="16" HasShadow="True">
+            <VerticalStackLayout Spacing="12">
+                <Entry x:Name="NameEntry" Placeholder="Customer Name" HeightRequest="48" BackgroundColor="#F9FAFB"/>
+                <Entry x:Name="PhoneEntry" Placeholder="Phone Number" Keyboard="Telephone" HeightRequest="48" BackgroundColor="#F9FAFB"/>
+                <Picker x:Name="GenderPicker" Title="Select Gender" HeightRequest="48">
+                    <Picker.Items>
+                        <x:String>Male</x:String>
+                        <x:String>Female</x:String>
+                        <x:String>Other</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Editor x:Name="AddressEditor" Placeholder="Address" HeightRequest="80" BackgroundColor="#F9FAFB"/>
+                <Button Text="💾 Save Customer" BackgroundColor="#2563EB" TextColor="White" CornerRadius="14" HeightRequest="52" Clicked="OnSaveCustomerClicked"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Customers List -->
+        <CollectionView x:Name="CustomersCollection" HeightRequest="300">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="12" Padding="12" BackgroundColor="White" HasShadow="True" Margin="0,4">
+                        <HorizontalStackLayout Spacing="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding PhoneNumber}" FontSize="12" TextColor="#64748B"/>
+                                <Label Text="{Binding Gender}" FontSize="12" TextColor="#64748B"/>
+                                <Label Text="{Binding Address}" FontSize="12" TextColor="#64748B"/>
+                            </VerticalStackLayout>
+                            <Button Text="❌" BackgroundColor="#EF4444" TextColor="White" CornerRadius="12" HorizontalOptions="EndAndExpand" Clicked="OnDeleteCustomerClicked" CommandParameter="{Binding .}"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>
