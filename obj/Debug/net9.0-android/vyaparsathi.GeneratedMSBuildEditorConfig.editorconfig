@@ -95,6 +95,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.Dashboar
 build_metadata.AdditionalFiles.TargetPath = Views\DashboardPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\DashboardPage.xaml
 
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/PurchasePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.PurchasePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\PurchasePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\PurchasePage.xaml
+
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/SettingsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.SettingsPage.xaml
@@ -118,3 +124,9 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.UdharPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\UdharPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\UdharPage.xaml
+
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/VendorPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.VendorPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\VendorPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\VendorPage.xaml

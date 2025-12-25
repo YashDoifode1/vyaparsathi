@@ -105,14 +105,35 @@ public partial class BillingPage : ContentPage
             Date = BillDatePicker.Date
         };
 
+        // Save Bill
         await App.Database.SaveBillAsync(bill);
 
-        foreach (var item in _billItems)
+        // Save Bill Items and update stock
+        foreach (var billItem in _billItems)
         {
-            item.BillId = bill.Id;
-            await App.Database.SaveBillItemAsync(item);
+            // Link bill item to bill
+            billItem.BillId = bill.Id;
+
+            // Save bill item
+            await App.Database.SaveBillItemAsync(billItem);
+
+            // Fetch the corresponding item from DB
+            var item = (await App.Database.GetItemsAsync())
+                .FirstOrDefault(i => i.Name == billItem.ItemName);
+
+            if (item != null)
+            {
+                // Subtract quantity sold from stock
+                item.StockQuantity -= (int)billItem.Quantity;
+                if (item.StockQuantity < 0)
+                    item.StockQuantity = 0;
+
+                // Update item in DB
+                await App.Database.SaveItemAsync(item);
+            }
         }
 
+        // Save Udhar if checked
         if (UdharCheckBox.IsChecked && _selectedCustomer != null)
         {
             var udhar = new Udhar
@@ -127,12 +148,14 @@ public partial class BillingPage : ContentPage
 
         await DisplayAlert("Success", "Bill saved successfully.", "OK");
 
+        // Reset form
         CustomerNameEntry.Text = "";
         CustomerPicker.SelectedIndex = -1;
         UdharCheckBox.IsChecked = false;
         _billItems.Clear();
         UpdateTotal();
     }
+
 
     private void OnPrintClicked(object sender, EventArgs e)
     {

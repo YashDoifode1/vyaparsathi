@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
+
+    x:Class="vyaparsathi.Views.PurchasePage"
+    Title="Purchase"
+    BackgroundColor="#F8FAFC">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="24">
+
+            <!-- Header -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Purchase Management"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="#0F172A"/>
+                <Label Text="Add new purchase for vendor"
+                       FontSize="14"
+                       TextColor="#64748B"/>
+            </VerticalStackLayout>
+
+            <!-- Vendor -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="18"
+                   Padding="18"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Select Vendor" FontSize="16" FontAttributes="Bold"/>
+                    <Picker x:Name="VendorPicker" Title="Select vendor" SelectedIndexChanged="OnVendorSelected"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Purchase Items -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="18"
+                   Padding="18"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="16">
+
+                    <Label Text="Purchase Items" FontSize="18" FontAttributes="Bold"/>
+
+                    <!-- Category Picker -->
+                    <Picker x:Name="CategoryPicker"
+                            Title="Select category"
+                            SelectedIndexChanged="OnCategoryChanged"/>
+
+                    <!-- Item Picker -->
+                    <Picker x:Name="ItemPicker"
+                            Title="Select item"
+                            SelectedIndexChanged="OnItemChanged"/>
+
+                    <!-- Quantity & Price -->
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Entry x:Name="QuantityEntry" Placeholder="Qty" Keyboard="Numeric" WidthRequest="70" BackgroundColor="#F1F5F9"/>
+                        <Entry x:Name="PriceEntry" Placeholder="Price" Keyboard="Numeric" WidthRequest="100" BackgroundColor="#F1F5F9" Grid.Column="1"/>
+                        <Button Text="Add" Grid.Column="2" Clicked="OnAddPurchaseItemClicked" BackgroundColor="#2563EB" TextColor="White" CornerRadius="12"/>
+                    </Grid>
+
+                    <!-- Purchase Items List -->
+                    <CollectionView x:Name="PurchaseItemsCollection" HeightRequest="220" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="6" ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding ItemName}" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Quantity}" Grid.Column="1"/>
+                                    <Label Text="{Binding Price, StringFormat='₹{0:F2}'}" Grid.Column="2"/>
+                                    <Label Text="{Binding Total, StringFormat='₹{0:F2}'}" Grid.Column="3" FontAttributes="Bold"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Grand Total -->
+                    <Grid Padding="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Grand Total" FontSize="16" FontAttributes="Bold"/>
+                        <Label x:Name="TotalLabel" Text="₹0.00" Grid.Column="1" FontSize="18" FontAttributes="Bold" TextColor="#16A34A"/>
+                    </Grid>
+
+                    <!-- Purchase Date -->
+                    <DatePicker x:Name="PurchaseDatePicker"
+            Date="{x:Static system:DateTime.Now}"
+            BackgroundColor="#F1F5F9"/>
+
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Save Button -->
+            <Button Text="Save Purchase"
+                    HeightRequest="52"
+                    CornerRadius="16"
+                    FontAttributes="Bold"
+                    BackgroundColor="#16A34A"
+                    TextColor="White"
+                    Clicked="OnSavePurchaseClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

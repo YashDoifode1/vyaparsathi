@@ -7,18 +7,21 @@ public partial class StockPage : ContentPage
 {
     private readonly DatabaseService _database;
     private List<Item> _items = new();
+    private List<Category> _categories = new();
 
     public StockPage()
     {
         InitializeComponent();
         _database = App.Database;
+
         LoadCategories();
+        LoadDashboard();
     }
 
     private async void LoadCategories()
     {
-        var categories = await _database.GetCategoriesAsync();
-        CategoryPicker.ItemsSource = categories;
+        _categories = await _database.GetCategoriesAsync();
+        CategoryPicker.ItemsSource = _categories;
         CategoryPicker.ItemDisplayBinding = new Binding("Name");
     }
 
@@ -47,7 +50,6 @@ public partial class StockPage : ContentPage
         PriceEntry.Text = item.SellingPrice.ToString("0.##");
     }
 
-    // ✅ FIXED EVENT HANDLER
     private async void OnSaveStockClicked(object sender, EventArgs e)
     {
         if (ItemPicker.SelectedItem is not Item item)
@@ -58,7 +60,7 @@ public partial class StockPage : ContentPage
 
         if (!int.TryParse(StockEntry.Text, out int quantity))
         {
-            await DisplayAlert("Error", "Enter valid stock quantity", "OK");
+            await DisplayAlert("Error", "Enter valid quantity", "OK");
             return;
         }
 
@@ -68,5 +70,30 @@ public partial class StockPage : ContentPage
         await DisplayAlert("Success", "Stock updated successfully", "OK");
 
         StockEntry.Text = string.Empty;
+        PriceEntry.Text = string.Empty;
+        ItemPicker.SelectedItem = null;
+
+        LoadDashboard();
+    }
+
+    private async void LoadDashboard()
+    {
+        var allItems = await _database.GetItemsAsync();
+
+        TotalItemsLabel.Text = allItems.Count.ToString();
+        TotalQuantityLabel.Text = allItems.Sum(i => i.StockQuantity).ToString();
+        LowStockLabel.Text = allItems.Count(i => i.StockQuantity < 10).ToString();
+
+        var totalValue = allItems.Sum(i => i.SellingPrice * i.StockQuantity);
+        TotalInventoryValueLabel.Text = $"₹{totalValue:0.##}";
+
+        // Category-wise distribution
+        var categoryStock = _categories.Select(c => new
+        {
+            Name = c.Name,
+            Quantity = allItems.Where(i => i.CategoryId == c.Id).Sum(i => i.StockQuantity)
+        }).ToList();
+
+        CategoryStockCollection.ItemsSource = categoryStock;
     }
 }

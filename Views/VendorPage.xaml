@@ -1,0 +1,44 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="vyaparsathi.Views.VendorPage"
+    Title="Vendors"
+    BackgroundColor="#F5F6FA">
+
+    <VerticalStackLayout Padding="20" Spacing="20">
+
+        <Label Text="Vendors" FontSize="26" FontAttributes="Bold" TextColor="#1E293B"/>
+        <Label Text="Manage your vendors or suppliers" FontSize="14" TextColor="#64748B"/>
+
+        <!-- Vendor Form -->
+        <Frame BackgroundColor="White" CornerRadius="16" Padding="16" HasShadow="True">
+            <VerticalStackLayout Spacing="12">
+                <Entry x:Name="NameEntry" Placeholder="Vendor Name" HeightRequest="48" BackgroundColor="#F9FAFB"/>
+                <Entry x:Name="PhoneEntry" Placeholder="Phone Number" Keyboard="Telephone" HeightRequest="48" BackgroundColor="#F9FAFB"/>
+                <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" HeightRequest="48" BackgroundColor="#F9FAFB"/>
+                <Editor x:Name="AddressEditor" Placeholder="Address" HeightRequest="80" BackgroundColor="#F9FAFB"/>
+                <Button Text="💾 Save Vendor" BackgroundColor="#2563EB" TextColor="White" CornerRadius="14" HeightRequest="52" Clicked="OnSaveVendorClicked"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Vendor List -->
+        <CollectionView x:Name="VendorCollectionView" HeightRequest="300">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="12" Padding="12" BackgroundColor="White" HasShadow="True" Margin="0,4">
+                        <HorizontalStackLayout Spacing="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Phone}" FontSize="12" TextColor="#64748B"/>
+                                <Label Text="{Binding Email}" FontSize="12" TextColor="#64748B"/>
+                                <Label Text="{Binding Address}" FontSize="12" TextColor="#64748B"/>
+                            </VerticalStackLayout>
+                            <Button Text="❌" BackgroundColor="#EF4444" TextColor="White" CornerRadius="12" HorizontalOptions="EndAndExpand" Clicked="OnDeleteVendorClicked" CommandParameter="{Binding .}"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>

@@ -2,69 +2,114 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:sys="clr-namespace:System;assembly=netstandard"
     x:Class="vyaparsathi.Views.BillingHistoryPage"
     Title="Billing History"
-    BackgroundColor="#F5F6FA">
+    BackgroundColor="#F8FAFC">
 
-    <VerticalStackLayout Padding="20" Spacing="16">
+    <VerticalStackLayout Padding="20" Spacing="24">
 
-        <!-- Header -->
+        <!-- Page Header -->
         <VerticalStackLayout Spacing="4">
             <Label Text="Billing History"
                    FontSize="26"
                    FontAttributes="Bold"
-                   TextColor="#1E293B"/>
-            <Label Text="Search and filter past bills"
+                   TextColor="#0F172A"/>
+            <Label Text="Search, filter, and review past bills"
                    FontSize="14"
                    TextColor="#64748B"/>
         </VerticalStackLayout>
 
-        <!-- Search by Name -->
-        <SearchBar x:Name="CustomerSearchBar"
-                   Placeholder="Search by customer name"
-                   TextChanged="OnSearchChanged"/>
+        <!-- Filters -->
+        <Frame BackgroundColor="White"
+               CornerRadius="18"
+               Padding="16"
+               HasShadow="True">
 
-        <!-- Date Filter -->
-        <HorizontalStackLayout Spacing="8">
-            <DatePicker x:Name="StartDatePicker" />
-            <DatePicker x:Name="EndDatePicker" />
-            <Button Text="Filter"
-                    BackgroundColor="#2563EB"
-                    TextColor="White"
-                    CornerRadius="12"
-                    Clicked="OnFilterClicked"/>
-        </HorizontalStackLayout>
+            <VerticalStackLayout Spacing="14">
+
+                <Label Text="Filters"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="#0F172A"/>
+
+                <!-- Search -->
+                <SearchBar x:Name="CustomerSearchBar"
+                           Placeholder="Search by customer name"
+                           FontSize="14"
+                           TextChanged="OnSearchChanged"/>
+
+                <!-- Date Range -->
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <DatePicker x:Name="StartDatePicker"
+                                Grid.Column="0"/>
+
+                    <DatePicker x:Name="EndDatePicker"
+                                Grid.Column="1"/>
+
+                    <Button Text="Apply"
+                            Grid.Column="2"
+                            HeightRequest="44"
+                            CornerRadius="12"
+                            FontAttributes="Bold"
+                            BackgroundColor="#2563EB"
+                            TextColor="White"
+                            Clicked="OnFilterClicked"/>
+                </Grid>
+
+            </VerticalStackLayout>
+        </Frame>
 
         <!-- Bills List -->
         <CollectionView x:Name="BillsCollection"
                         SelectionMode="Single"
-                        SelectionChanged="OnBillSelected">
+                        SelectionChanged="OnBillSelected"
+                        VerticalOptions="FillAndExpand">
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame CornerRadius="12"
-                           Padding="12"
-                           BackgroundColor="White"
-                           HasShadow="True"
-                           Margin="0,4">
-                        <HorizontalStackLayout Spacing="12">
-                            <VerticalStackLayout>
+                    <Frame BackgroundColor="White"
+                           CornerRadius="16"
+                           Padding="16"
+                           Margin="0,8"
+                           HasShadow="True">
+
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Bill Info -->
+                            <VerticalStackLayout Spacing="4">
                                 <Label Text="{Binding CustomerName}"
+                                       FontSize="16"
                                        FontAttributes="Bold"
-                                       FontSize="16"/>
-                                <Label Text="{Binding Date, StringFormat='Date: {0:dd/MM/yyyy}'}"
+                                       TextColor="#0F172A"/>
+
+                                <Label Text="{Binding Date, StringFormat='Billed on {0:dd MMM yyyy}'}"
                                        FontSize="12"
                                        TextColor="#64748B"/>
                             </VerticalStackLayout>
 
+                            <!-- Amount -->
                             <Label Text="{Binding TotalAmount, StringFormat='₹{0:F2}'}"
+                                   Grid.Column="1"
                                    FontSize="16"
                                    FontAttributes="Bold"
-                                   HorizontalOptions="EndAndExpand"/>
-                        </HorizontalStackLayout>
+                                   TextColor="#16A34A"
+                                   VerticalTextAlignment="Center"/>
+                        </Grid>
+
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+
         </CollectionView>
 
     </VerticalStackLayout>

@@ -4,92 +4,120 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="vyaparsathi.Views.BackupRestorePage"
     Title="Backup &amp; Restore"
-    BackgroundColor="#F5F6FA">
+
+    BackgroundColor="#F8FAFC">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+        <VerticalStackLayout Padding="20" Spacing="24">
 
             <!-- Header -->
-            <VerticalStackLayout Spacing="4">
+            <VerticalStackLayout Spacing="6">
                 <Label Text="Backup &amp; Restore"
-                       FontSize="26"
-                       FontAttributes="Bold"
-                       TextColor="#1E293B"/>
-                <Label Text="Backup your app data or restore from a previous backup"
+       FontSize="26"
+       FontAttributes="Bold"
+       TextColor="#0F172A"/>
+
+
+                <Label Text="Securely backup or restore your business data"
                        FontSize="14"
                        TextColor="#64748B"/>
             </VerticalStackLayout>
 
-            <!-- Backup Options -->
-            <Frame CornerRadius="16"
+            <!-- Backup Card -->
+            <Frame CornerRadius="18"
                    BackgroundColor="White"
-                   Padding="16"
+                   Padding="18"
                    HasShadow="True">
-                <VerticalStackLayout Spacing="12">
 
-                    <Label Text="Select Data to Backup"
-                           FontSize="16"
+                <VerticalStackLayout Spacing="16">
+
+                    <Label Text="Backup Data"
+                           FontSize="18"
                            FontAttributes="Bold"
                            TextColor="#1E293B"/>
 
-                    <!-- Checkboxes -->
-                    <HorizontalStackLayout Spacing="10">
-                        <CheckBox x:Name="CategoryCheck"/>
-                        <Label Text="Categories" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
+                    <Label Text="Select the data you want to include in backup"
+                           FontSize="13"
+                           TextColor="#64748B"/>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <CheckBox x:Name="ItemCheck"/>
-                        <Label Text="Items" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
+                    <!-- Backup Options -->
+                    <Grid RowSpacing="12" ColumnSpacing="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <CheckBox x:Name="UdharCheck"/>
-                        <Label Text="Udhar" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="0" Spacing="10">
+                            <CheckBox x:Name="CategoryCheck"/>
+                            <Label Text="Categories" VerticalTextAlignment="Center"/>
+                        </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <CheckBox x:Name="BillingCheck"/>
-                        <Label Text="Billing History" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="1" Spacing="10">
+                            <CheckBox x:Name="ItemCheck"/>
+                            <Label Text="Items" VerticalTextAlignment="Center"/>
+                        </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <CheckBox x:Name="ProfileCheck"/>
-                        <Label Text="Business Profile" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="2" Spacing="10">
+                            <CheckBox x:Name="UdharCheck"/>
+                            <Label Text="Udhar Records" VerticalTextAlignment="Center"/>
+                        </HorizontalStackLayout>
 
-                    <Button Text="💾 Backup Data"
+                        <HorizontalStackLayout Grid.Row="3" Spacing="10">
+                            <CheckBox x:Name="BillingCheck"/>
+                            <Label Text="Billing History" VerticalTextAlignment="Center"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="4" Spacing="10">
+                            <CheckBox x:Name="ProfileCheck"/>
+                            <Label Text="Business Profile" VerticalTextAlignment="Center"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+
+                    <!-- Backup Button -->
+                    <Button Text="Backup Now"
+                            HeightRequest="52"
+                            CornerRadius="16"
+                            FontAttributes="Bold"
                             BackgroundColor="#2563EB"
                             TextColor="White"
-                            FontAttributes="Bold"
-                            CornerRadius="14"
                             Clicked="OnBackupClicked"/>
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Restore Section -->
-            <Frame CornerRadius="16"
+            <!-- Restore Card -->
+            <Frame CornerRadius="18"
                    BackgroundColor="White"
-                   Padding="16"
+                   Padding="18"
                    HasShadow="True">
-                <VerticalStackLayout Spacing="12">
+
+                <VerticalStackLayout Spacing="16">
+
                     <Label Text="Restore Backup"
-                           FontSize="16"
+                           FontSize="18"
                            FontAttributes="Bold"
                            TextColor="#1E293B"/>
 
-                    <Button Text="📂 Select Backup File"
+                    <Label Text="Restore data from a previously saved backup file"
+                           FontSize="13"
+                           TextColor="#64748B"/>
+
+                    <Button Text="Select Backup File"
+                            HeightRequest="48"
+                            CornerRadius="14"
+                            FontAttributes="Bold"
                             BackgroundColor="#F59E0B"
                             TextColor="White"
-                            FontAttributes="Bold"
-                            CornerRadius="14"
                             Clicked="OnSelectBackupClicked"/>
 
-                    <Button Text="♻ Restore Data"
+                    <Button Text="Restore Data"
+                            HeightRequest="52"
+                            CornerRadius="16"
+                            FontAttributes="Bold"
                             BackgroundColor="#16A34A"
                             TextColor="White"
-                            FontAttributes="Bold"
-                            CornerRadius="14"
                             Clicked="OnRestoreClicked"/>
                 </VerticalStackLayout>
             </Frame>

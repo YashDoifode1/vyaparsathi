@@ -4,47 +4,130 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="vyaparsathi.Views.CustomersPage"
     Title="Customers"
-    BackgroundColor="#F5F6FA">
+    BackgroundColor="#F8FAFC">
 
-    <VerticalStackLayout Padding="20" Spacing="20">
+    <VerticalStackLayout Padding="20" Spacing="24">
 
-        <!-- Header -->
+        <!-- Page Header -->
         <VerticalStackLayout Spacing="4">
-            <Label Text="Customers" FontSize="26" FontAttributes="Bold" TextColor="#1E293B"/>
-            <Label Text="Manage your customers" FontSize="14" TextColor="#64748B"/>
+            <Label Text="Customers"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   TextColor="#0F172A"/>
+
+            <Label Text="Create and manage customer records"
+                   FontSize="14"
+                   TextColor="#64748B"/>
         </VerticalStackLayout>
 
-        <!-- Form -->
-        <Frame CornerRadius="16" BackgroundColor="White" Padding="16" HasShadow="True">
-            <VerticalStackLayout Spacing="12">
-                <Entry x:Name="NameEntry" Placeholder="Customer Name" HeightRequest="48" BackgroundColor="#F9FAFB"/>
-                <Entry x:Name="PhoneEntry" Placeholder="Phone Number" Keyboard="Telephone" HeightRequest="48" BackgroundColor="#F9FAFB"/>
-                <Picker x:Name="GenderPicker" Title="Select Gender" HeightRequest="48">
+        <!-- Customer Form -->
+        <Frame BackgroundColor="White"
+               CornerRadius="18"
+               Padding="18"
+               HasShadow="True">
+
+            <VerticalStackLayout Spacing="16">
+
+                <Label Text="Add Customer"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#0F172A"/>
+
+                <Entry x:Name="NameEntry"
+                       Placeholder="Customer name"
+                       HeightRequest="50"
+                       BackgroundColor="#F1F5F9"/>
+
+                <Entry x:Name="PhoneEntry"
+                       Placeholder="Phone number"
+                       Keyboard="Telephone"
+                       HeightRequest="50"
+                       BackgroundColor="#F1F5F9"/>
+
+                <Picker x:Name="GenderPicker"
+                        Title="Gender"
+                        HeightRequest="50">
                     <Picker.Items>
                         <x:String>Male</x:String>
                         <x:String>Female</x:String>
                         <x:String>Other</x:String>
                     </Picker.Items>
                 </Picker>
-                <Editor x:Name="AddressEditor" Placeholder="Address" HeightRequest="80" BackgroundColor="#F9FAFB"/>
-                <Button Text="💾 Save Customer" BackgroundColor="#2563EB" TextColor="White" CornerRadius="14" HeightRequest="52" Clicked="OnSaveCustomerClicked"/>
+
+                <Editor x:Name="AddressEditor"
+                        Placeholder="Address"
+                        HeightRequest="90"
+                        BackgroundColor="#F1F5F9"/>
+
+                <Button Text="Save Customer"
+                        HeightRequest="52"
+                        CornerRadius="16"
+                        FontAttributes="Bold"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        Clicked="OnSaveCustomerClicked"/>
             </VerticalStackLayout>
         </Frame>
 
+        <!-- Customer List Header -->
+        <Label Text="All Customers"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="#0F172A"/>
+
         <!-- Customers List -->
-        <CollectionView x:Name="CustomersCollection" HeightRequest="300">
+        <CollectionView x:Name="CustomersCollection"
+                        VerticalOptions="FillAndExpand"
+                        SelectionMode="None">
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame CornerRadius="12" Padding="12" BackgroundColor="White" HasShadow="True" Margin="0,4">
-                        <HorizontalStackLayout Spacing="10">
-                            <VerticalStackLayout>
-                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
-                                <Label Text="{Binding PhoneNumber}" FontSize="12" TextColor="#64748B"/>
-                                <Label Text="{Binding Gender}" FontSize="12" TextColor="#64748B"/>
-                                <Label Text="{Binding Address}" FontSize="12" TextColor="#64748B"/>
+                    <Frame BackgroundColor="White"
+                           CornerRadius="16"
+                           Padding="16"
+                           Margin="0,8"
+                           HasShadow="True">
+
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Customer Info -->
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Name}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#0F172A"/>
+
+                                <Label Text="{Binding PhoneNumber}"
+                                       FontSize="13"
+                                       TextColor="#64748B"/>
+
+                                <Label Text="{Binding Gender}"
+                                       FontSize="12"
+                                       TextColor="#94A3B8"/>
+
+                                <Label Text="{Binding Address}"
+                                       FontSize="12"
+                                       TextColor="#94A3B8"
+                                       LineBreakMode="TailTruncation"/>
                             </VerticalStackLayout>
-                            <Button Text="❌" BackgroundColor="#EF4444" TextColor="White" CornerRadius="12" HorizontalOptions="EndAndExpand" Clicked="OnDeleteCustomerClicked" CommandParameter="{Binding .}"/>
-                        </HorizontalStackLayout>
+
+                            <!-- Delete -->
+                            <Button Text="Delete"
+                                    Grid.Column="1"
+                                    FontSize="13"
+                                    Padding="12,6"
+                                    CornerRadius="10"
+                                    BackgroundColor="#FEE2E2"
+                                    TextColor="#B91C1C"
+                                    VerticalOptions="Center"
+                                    Clicked="OnDeleteCustomerClicked"
+                                    CommandParameter="{Binding .}"/>
+                        </Grid>
+
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
