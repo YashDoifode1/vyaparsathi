@@ -8,7 +8,7 @@
     BackgroundColor="#FFFFFF">
 
     <!-- ===================== -->
-    <!-- Flyout Header: Business Profile -->
+    <!-- Flyout Header -->
     <!-- ===================== -->
     <Shell.FlyoutHeader>
         <Grid BackgroundColor="#2563EB" Padding="20">
@@ -27,65 +27,50 @@
     <!-- ===================== -->
     <!-- DASHBOARD -->
     <!-- ===================== -->
-    <FlyoutItem Title="Dashboard"
-                Icon="home.png"
-                Route="dashboard">
+    <FlyoutItem Title="Dashboard" Icon="home.png">
         <ShellContent
             Title="Dashboard"
-            Route="dashboard_page"
             ContentTemplate="{DataTemplate views:DashboardPage}" />
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- BILLING -->
     <!-- ===================== -->
-    <FlyoutItem Title="Billing"
-                Icon="billing.png"
-                Route="billing">
+    <FlyoutItem Title="Billing" Icon="billing.png">
         <ShellContent
             Title="Create Bill"
-            Route="billing_create"
             ContentTemplate="{DataTemplate views:BillingPage}" />
         <ShellContent
             Title="Billing History"
-            Route="billing_history"
             ContentTemplate="{DataTemplate views:BillingHistoryPage}" />
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- STOCK -->
     <!-- ===================== -->
-    <FlyoutItem Title="Stock"
-                Icon="stock.png"
-                Route="stock">
+    <FlyoutItem Title="Stock" Icon="stock.png">
         <ShellContent
             Title="Stock Management"
-            Route="stock_page"
             ContentTemplate="{DataTemplate views:StockPage}" />
     </FlyoutItem>
 
     <!-- ===================== -->
-    <!-- PURCHASE -->
+    <!-- PURCHASE & VENDORS -->
     <!-- ===================== -->
-    <FlyoutItem Title="Purchase"
-                Icon="purchase.png"
-                Route="purchase">
+    <FlyoutItem Title="Purchase" Icon="purchase.png">
+
         <ShellContent
             Title="New Purchase"
-            Route="purchase_page"
             ContentTemplate="{DataTemplate views:PurchasePage}" />
-    </FlyoutItem>
 
-    <!-- ===================== -->
-    <!-- VENDORS -->
-    <!-- ===================== -->
-    <FlyoutItem Title="Vendors"
-                Icon="vendor.png"
-                Route="vendors">
         <ShellContent
-            Title="Manage Vendors"
-            Route="vendor_page"
+            Title="Purchase History"
+            ContentTemplate="{DataTemplate views:PurchaseHistoryPage}" />
+
+        <ShellContent
+            Title="Vendors"
             ContentTemplate="{DataTemplate views:VendorPage}" />
+
     </FlyoutItem>
 
     <!-- ===================== -->
@@ -102,50 +87,44 @@
             Title="Udhar History"
             Route="udhar_history"
             ContentTemplate="{DataTemplate views:UdharHistoryPage}" />
+        <ShellContent
+            Title="Udhar Notification"
+            Route="udhar_notification"
+            ContentTemplate="{DataTemplate views:UdharNotificationPage}" />
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- CUSTOMERS -->
     <!-- ===================== -->
-    <FlyoutItem Title="Customers"
-                Icon="customers.png"
-                Route="customers">
+    <FlyoutItem Title="Customers" Icon="customers.png">
         <ShellContent
             Title="Customers"
-            Route="customers_page"
             ContentTemplate="{DataTemplate views:CustomersPage}" />
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- MASTER DATA -->
     <!-- ===================== -->
-    <FlyoutItem Title="Master Data"
-                Icon="database.png"
-                Route="master_data">
+    <FlyoutItem Title="Master Data" Icon="database.png">
         <ShellContent
             Title="Categories"
-            Route="categories"
             ContentTemplate="{DataTemplate views:AddCategoryPage}" />
         <ShellContent
             Title="Items"
-            Route="items"
             ContentTemplate="{DataTemplate views:AddItemPage}" />
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- SETTINGS -->
     <!-- ===================== -->
-    <FlyoutItem Title="Settings"
-                Icon="settings.png"
-                Route="settings">
+    <FlyoutItem Title="Settings" Icon="settings.png">
         <ShellContent
             Title="Settings"
-            Route="settings_page"
             ContentTemplate="{DataTemplate views:SettingsPage}" />
         <ShellContent
             Title="Backup &amp; Restore"
-            Route="backup_restore"
             ContentTemplate="{DataTemplate views:BackupRestorePage}" />
     </FlyoutItem>
+    
 
 </Shell>

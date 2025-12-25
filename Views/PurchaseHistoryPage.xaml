@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="vyaparsathi.Views.PurchaseHistoryPage"
+    Title="Purchase History"
+    BackgroundColor="#F8FAFC">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="24">
+
+            <!-- Header -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Purchase History"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="#0F172A"/>
+                <Label Text="View past purchases by vendor"
+                       FontSize="14"
+                       TextColor="#64748B"/>
+            </VerticalStackLayout>
+
+            <!-- Vendor Filter -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="18"
+                   Padding="16"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Filter by Vendor"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B"/>
+                    <Picker x:Name="VendorPicker"
+                            Title="Select Vendor"
+                            SelectedIndexChanged="OnVendorChanged"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Purchase List -->
+            <CollectionView x:Name="PurchaseCollectionView"
+                            SelectionMode="None"
+                            HeightRequest="400">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="White"
+                               CornerRadius="12"
+                               Padding="12"
+                               Margin="0,0,0,12"
+                               HasShadow="True">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{Binding VendorName}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"/>
+                                <Label Text="{Binding Date, StringFormat='Date: {0:dd MMM yyyy}'}"
+                                       FontSize="14"
+                                       TextColor="#64748B"/>
+                                <CollectionView ItemsSource="{Binding Items}"
+                                                SelectionMode="None">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnSpacing="12">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="{Binding ItemName}" />
+                                                <Label Text="{Binding Quantity}" Grid.Column="1"/>
+                                                <Label Text="{Binding Total, StringFormat='₹{0:F2}'}" Grid.Column="2"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                                <Label Text="{Binding GrandTotal, StringFormat='Grand Total: ₹{0:F2}'}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#16A34A"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

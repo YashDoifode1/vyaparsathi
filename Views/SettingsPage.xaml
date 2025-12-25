@@ -15,7 +15,6 @@
                        FontSize="26"
                        FontAttributes="Bold"
                        TextColor="#0F172A"/>
-
                 <Label Text="Manage your business preferences"
                        FontSize="14"
                        TextColor="#64748B"/>
@@ -26,9 +25,7 @@
                    CornerRadius="18"
                    Padding="18"
                    HasShadow="True">
-
                 <VerticalStackLayout Spacing="16">
-
                     <Label Text="Business Profile"
                            FontSize="18"
                            FontAttributes="Bold"
@@ -38,18 +35,15 @@
                            Placeholder="Business name"
                            HeightRequest="50"
                            BackgroundColor="#F1F5F9"/>
-
                     <Entry x:Name="OwnerNameEntry"
                            Placeholder="Owner name"
                            HeightRequest="50"
                            BackgroundColor="#F1F5F9"/>
-
                     <Entry x:Name="PhoneEntry"
                            Placeholder="Phone number"
                            Keyboard="Telephone"
                            HeightRequest="50"
                            BackgroundColor="#F1F5F9"/>
-
                     <Entry x:Name="WhatsAppEntry"
                            Placeholder="WhatsApp number"
                            Keyboard="Telephone"
@@ -71,8 +65,7 @@
                    CornerRadius="18"
                    Padding="8"
                    HasShadow="True">
-
-                <VerticalStackLayout>
+                <VerticalStackLayout Spacing="0">
 
                     <!-- Add Category -->
                     <Grid Padding="14" ColumnSpacing="12">
@@ -162,6 +155,44 @@
                         </Grid.GestureRecognizers>
                     </Grid>
 
+                    <BoxView HeightRequest="1" BackgroundColor="#E5E7EB"/>
+
+                    <!-- SMS API Settings -->
+                    <VerticalStackLayout Padding="14" Spacing="8">
+                        <Label Text="SMS Settings"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#0F172A"/>
+                        <Entry x:Name="ApiKeyEntry"
+                               Placeholder="API Key"
+                               HeightRequest="50"
+                               BackgroundColor="#F1F5F9"/>
+                        <Entry x:Name="SenderIdEntry"
+                               Placeholder="Sender ID"
+                               HeightRequest="50"
+                               BackgroundColor="#F1F5F9"/>
+                        <Entry x:Name="SmsUrlEntry"
+                               Placeholder="SMS URL"
+                               HeightRequest="50"
+                               BackgroundColor="#F1F5F9"/>
+                        <Button Text="Save SMS Settings"
+                                HeightRequest="48"
+                                CornerRadius="14"
+                                BackgroundColor="#2563EB"
+                                TextColor="White"
+                                Clicked="OnSaveSmsSettingsClicked"/>
+                    </VerticalStackLayout>
+
+                    <BoxView HeightRequest="1" BackgroundColor="#E5E7EB"/>
+
+                    <!-- Reset Database -->
+                    <Button Text="Reset Database"
+                            HeightRequest="52"
+                            CornerRadius="16"
+                            FontAttributes="Bold"
+                            BackgroundColor="#DC2626"
+                            TextColor="White"
+                            Clicked="OnResetDatabaseClicked"/>
                 </VerticalStackLayout>
             </Frame>
 

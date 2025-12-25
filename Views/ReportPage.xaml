@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="vyaparsathi.Views.ReportPage"
+    Title="Reports"
+    BackgroundColor="#F3F4F6">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="22">
+
+            <!-- Header -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Business Reports"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="#0F172A" />
+                <Label Text="Analyze sales, purchase, profit and udhar"
+                       FontSize="14"
+                       TextColor="#64748B" />
+            </VerticalStackLayout>
+
+            <!-- Date Filters -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="18"
+                   Padding="16"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Filter by Date Range"
+                           FontAttributes="Bold"
+                           FontSize="14" />
+
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <DatePicker x:Name="FromDatePicker"
+                                    Grid.Column="0" />
+
+                        <DatePicker x:Name="ToDatePicker"
+                                    Grid.Column="1" />
+                    </Grid>
+
+                    <Button Text="Apply Filter"
+                            HeightRequest="44"
+                            CornerRadius="14"
+                            FontAttributes="Bold"
+                            BackgroundColor="#2563EB"
+                            TextColor="White"
+                            Clicked="OnApplyFilterClicked" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- KPI Cards -->
+            <Grid ColumnSpacing="16" RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Total Sales -->
+                <Frame Grid.Row="0" Grid.Column="0"
+                       CornerRadius="18"
+                       BackgroundColor="White"
+                       Padding="18">
+                    <VerticalStackLayout>
+                        <Label Text="Total Sales"
+                               FontSize="13"
+                               TextColor="#6B7280"/>
+                        <Label x:Name="TotalSalesLabel"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#16A34A"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Purchase Cost -->
+                <Frame Grid.Row="0" Grid.Column="1"
+                       CornerRadius="18"
+                       BackgroundColor="White"
+                       Padding="18">
+                    <VerticalStackLayout>
+                        <Label Text="Total Purchase Cost"
+                               FontSize="13"
+                               TextColor="#6B7280"/>
+                        <Label x:Name="PurchaseCostLabel"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#DC2626"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Profit -->
+                <Frame Grid.Row="1" Grid.Column="0"
+                       CornerRadius="18"
+                       BackgroundColor="White"
+                       Padding="18">
+                    <VerticalStackLayout>
+                        <Label Text="Gross Profit"
+                               FontSize="13"
+                               TextColor="#6B7280"/>
+                        <Label x:Name="ProfitLabel"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#2563EB"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Udhar -->
+                <Frame Grid.Row="1" Grid.Column="1"
+                       CornerRadius="18"
+                       BackgroundColor="White"
+                       Padding="18">
+                    <VerticalStackLayout>
+                        <Label Text="Total Udhar"
+                               FontSize="13"
+                               TextColor="#6B7280"/>
+                        <Label x:Name="UdharLabel"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#F59E0B"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Bills -->
+                <Frame Grid.Row="2" Grid.ColumnSpan="2"
+                       CornerRadius="18"
+                       BackgroundColor="White"
+                       Padding="18">
+                    <VerticalStackLayout>
+                        <Label Text="Total Bills"
+                               FontSize="13"
+                               TextColor="#6B7280"/>
+                        <Label x:Name="BillsCountLabel"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#0F172A"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -80,6 +80,8 @@ public partial class StockPage : ContentPage
     {
         var allItems = await _database.GetItemsAsync();
 
+        // Dashboard metrics
+        TotalCategoriesLabel.Text = (await _database.GetCategoriesAsync()).Count.ToString();
         TotalItemsLabel.Text = allItems.Count.ToString();
         TotalQuantityLabel.Text = allItems.Sum(i => i.StockQuantity).ToString();
         LowStockLabel.Text = allItems.Count(i => i.StockQuantity < 10).ToString();
@@ -87,7 +89,7 @@ public partial class StockPage : ContentPage
         var totalValue = allItems.Sum(i => i.SellingPrice * i.StockQuantity);
         TotalInventoryValueLabel.Text = $"₹{totalValue:0.##}";
 
-        // Category-wise distribution
+        // Category-wise stock
         var categoryStock = _categories.Select(c => new
         {
             Name = c.Name,

@@ -95,11 +95,23 @@ build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.Dashboar
 build_metadata.AdditionalFiles.TargetPath = Views\DashboardPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\DashboardPage.xaml
 
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/PurchaseHistoryPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.PurchaseHistoryPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\PurchaseHistoryPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\PurchaseHistoryPage.xaml
+
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/PurchasePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.PurchasePage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\PurchasePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\PurchasePage.xaml
+
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/ReportPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.ReportPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ReportPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ReportPage.xaml
 
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/SettingsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
@@ -118,6 +130,12 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.UdharHistoryPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\UdharHistoryPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\UdharHistoryPage.xaml
+
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/UdharNotificationPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.UdharNotificationPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UdharNotificationPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UdharNotificationPage.xaml
 
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/UdharPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

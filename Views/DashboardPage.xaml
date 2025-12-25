@@ -6,8 +6,9 @@
     Title="Dashboard"
     BackgroundColor="#F3F4F6">
 
+    <!-- ONLY ONE ROOT -->
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="26">
+        <VerticalStackLayout Padding="20" Spacing="22">
 
             <!-- Header -->
             <VerticalStackLayout Spacing="4">
@@ -15,130 +16,114 @@
                        FontSize="30"
                        FontAttributes="Bold"
                        TextColor="#111827"/>
-
                 <Label Text="Business Overview"
                        FontSize="14"
                        TextColor="#6B7280"/>
             </VerticalStackLayout>
 
-            <!-- KPI Section -->
-            <Label Text="Today at a Glance"
-                   FontSize="16"
-                   FontAttributes="Bold"
-                   TextColor="#111827"/>
-
-            <Grid ColumnSpacing="16" RowSpacing="16">
+            <!-- KPI GRID -->
+            <Grid ColumnSpacing="14" RowSpacing="14">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Card Template -->
-                <!-- Today's Sales -->
-                <Frame Grid.Row="0" Grid.Column="0"
-                       CornerRadius="18"
-                       BackgroundColor="White"
-                       Padding="18"
-                       HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Today's Sales"
-                               FontSize="13"
-                               TextColor="#6B7280"/>
+                <!-- Today Sales -->
+                <Frame BackgroundColor="White" CornerRadius="18" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Today's Sales" FontSize="12" TextColor="#6B7280"/>
                         <Label x:Name="TodaySalesLabel"
                                Text="₹0"
-                               FontSize="26"
+                               FontSize="24"
                                FontAttributes="Bold"
                                TextColor="#16A34A"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Total Udhar -->
-                <Frame Grid.Row="0" Grid.Column="1"
-                       CornerRadius="18"
-                       BackgroundColor="White"
-                       Padding="18"
-                       HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Total Udhar"
-                               FontSize="13"
-                               TextColor="#6B7280"/>
-                        <Label x:Name="TotalUdharLabel"
+                <!-- Total Profit -->
+                <Frame Grid.Column="1" BackgroundColor="White" CornerRadius="18" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total Profit" FontSize="12" TextColor="#6B7280"/>
+                        <Label x:Name="TotalProfitLabel"
                                Text="₹0"
-                               FontSize="26"
+                               FontSize="24"
                                FontAttributes="Bold"
-                               TextColor="#DC2626"/>
+                               TextColor="#2563EB"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Low Stock -->
-                <Frame Grid.Row="1" Grid.Column="0"
-                       CornerRadius="18"
-                       BackgroundColor="White"
-                       Padding="18"
-                       HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Low Stock Items"
-                               FontSize="13"
-                               TextColor="#6B7280"/>
-                        <Label x:Name="LowStockLabel"
-                               Text="0"
-                               FontSize="26"
+                <!-- Stock Value -->
+                <Frame Grid.Row="1" BackgroundColor="White" CornerRadius="18" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total Stock Value" FontSize="12" TextColor="#6B7280"/>
+                        <Label x:Name="StockValueLabel"
+                               Text="₹0"
+                               FontSize="24"
                                FontAttributes="Bold"
                                TextColor="#F59E0B"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Total Products -->
-                <Frame Grid.Row="1" Grid.Column="1"
-                       CornerRadius="18"
-                       BackgroundColor="White"
-                       Padding="18"
-                       HasShadow="True">
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Total Products"
-                               FontSize="13"
-                               TextColor="#6B7280"/>
-                        <Label x:Name="TotalProductsLabel"
-                               Text="0"
-                               FontSize="26"
+                <!-- Udhar -->
+                <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="White" CornerRadius="18" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total Udhar" FontSize="12" TextColor="#6B7280"/>
+                        <Label x:Name="TotalUdharLabel"
+                               Text="₹0"
+                               FontSize="24"
                                FontAttributes="Bold"
-                               TextColor="#2563EB"/>
+                               TextColor="#DC2626"/>
                     </VerticalStackLayout>
                 </Frame>
+
+                <!-- Customers -->
+                <Frame Grid.Row="2" BackgroundColor="White" CornerRadius="18" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total Customers" FontSize="12" TextColor="#6B7280"/>
+                        <Label x:Name="TotalCustomersLabel"
+                               Text="0"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#0F172A"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Vendors -->
+                <Frame Grid.Row="2" Grid.Column="1" BackgroundColor="White" CornerRadius="18" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total Vendors" FontSize="12" TextColor="#6B7280"/>
+                        <Label x:Name="TotalVendorsLabel"
+                               Text="0"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#0F172A"/>
+                    </VerticalStackLayout>
+                </Frame>
+
             </Grid>
 
-            <!-- Actions -->
-            <Label Text="Quick Actions"
-                   FontSize="16"
-                   FontAttributes="Bold"
-                   TextColor="#111827"/>
+            <!-- ACTIONS -->
+            <Button Text="Create New Bill"
+                    BackgroundColor="#2563EB"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="16"
+                    HeightRequest="52"
+                    Clicked="OnCreateBillClicked"/>
 
-            <VerticalStackLayout Spacing="14">
-
-                <!-- Primary Action -->
-                <Button Text="Create New Bill"
-                        BackgroundColor="#2563EB"
-                        TextColor="White"
-                        FontSize="16"
-                        FontAttributes="Bold"
-                        CornerRadius="16"
-                        HeightRequest="54"
-                        Clicked="OnCreateBillClicked"/>
-
-                <!-- Secondary Action -->
-                <Button Text="Manage Stock"
-                        BackgroundColor="#E5E7EB"
-                        TextColor="#111827"
-                        FontSize="16"
-                        FontAttributes="Bold"
-                        CornerRadius="16"
-                        HeightRequest="54"
-                        Clicked="OnStockClicked"/>
-            </VerticalStackLayout>
+            <Button Text="Manage Stock"
+                    BackgroundColor="#E5E7EB"
+                    TextColor="#111827"
+                    FontAttributes="Bold"
+                    CornerRadius="16"
+                    HeightRequest="52"
+                    Clicked="OnStockClicked"/>
 
         </VerticalStackLayout>
     </ScrollView>

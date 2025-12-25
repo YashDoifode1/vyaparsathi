@@ -14,23 +14,30 @@
                    FontSize="26"
                    FontAttributes="Bold"
                    TextColor="#0F172A"/>
-
             <Label Text="Track pending and cleared udhar payments"
                    FontSize="14"
                    TextColor="#64748B"/>
         </VerticalStackLayout>
 
-        <!-- Search -->
-        <Entry x:Name="SearchEntry"
-               Placeholder="Search customer name"
-               HeightRequest="48"
-               BackgroundColor="White"
-               ClearButtonVisibility="WhileEditing"
-               TextChanged="OnSearchTextChanged"/>
+        <!-- Filters -->
+        <HorizontalStackLayout Spacing="12">
+            <Picker x:Name="CustomerPicker"
+                    Title="Filter by Customer"
+                    SelectedIndexChanged="OnCustomerFilterChanged"
+                    HorizontalOptions="FillAndExpand"/>
+
+            <Entry x:Name="SearchEntry"
+                   Placeholder="Search customer"
+                   BackgroundColor="White"
+                   ClearButtonVisibility="WhileEditing"
+                   TextChanged="OnSearchTextChanged"
+                   HorizontalOptions="FillAndExpand"/>
+        </HorizontalStackLayout>
 
         <!-- Udhar List -->
         <CollectionView x:Name="UdharCollection"
-                        SelectionMode="None">
+                        SelectionMode="None"
+                        EmptyView="No udhar records found.">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>

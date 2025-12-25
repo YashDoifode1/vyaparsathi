@@ -1,10 +1,13 @@
 ﻿using vyaparsathi.Models;
+using vyaparsathi.Services;
 
 namespace vyaparsathi.Views;
 
 public partial class UdharHistoryPage : ContentPage
 {
     private List<Udhar> _allUdhars = new();
+    private List<Customer> _customers = new();
+    private int? _selectedCustomerId = null;
 
     public UdharHistoryPage()
     {
@@ -14,35 +17,69 @@ public partial class UdharHistoryPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        await LoadCustomers();
         await LoadUdhars();
+    }
+
+    private async Task LoadCustomers()
+    {
+        _customers = await App.Database.GetCustomersAsync();
+        CustomerPicker.ItemsSource = _customers.Select(c => c.Name).ToList();
     }
 
     private async Task LoadUdhars()
     {
-        _allUdhars = await App.Database.GetUdharHistoryAsync();
+        _allUdhars = await App.Database.GetUdharsAsync();
 
-        // TODO: Replace with real customer lookup later
+        // Map customer names
         foreach (var u in _allUdhars)
-            u.CustomerName = $"Customer #{u.CustomerId}";
+        {
+            u.CustomerName = _customers.FirstOrDefault(c => c.Id == u.CustomerId)?.Name ?? "Unknown";
+        }
 
-        UdharCollection.ItemsSource = _allUdhars;
+        ApplyFilters();
+    }
+
+    private void ApplyFilters()
+    {
+        var filtered = _allUdhars.AsEnumerable();
+
+        // Customer dropdown filter
+        if (_selectedCustomerId.HasValue)
+        {
+            filtered = filtered.Where(u => u.CustomerId == _selectedCustomerId.Value);
+        }
+
+        // Search filter
+        var keyword = SearchEntry.Text?.ToLower() ?? "";
+        if (!string.IsNullOrWhiteSpace(keyword))
+        {
+            filtered = filtered.Where(u => u.CustomerName.ToLower().Contains(keyword));
+        }
+
+        UdharCollection.ItemsSource = filtered.ToList();
+    }
+
+    private void OnCustomerFilterChanged(object sender, EventArgs e)
+    {
+        var index = CustomerPicker.SelectedIndex;
+        if (index >= 0 && index < _customers.Count)
+            _selectedCustomerId = _customers[index].Id;
+        else
+            _selectedCustomerId = null;
+
+        ApplyFilters();
     }
 
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        var keyword = e.NewTextValue?.ToLower() ?? "";
-
-        UdharCollection.ItemsSource = _allUdhars
-            .Where(u => u.CustomerName.ToLower().Contains(keyword))
-            .ToList();
+        ApplyFilters();
     }
 
     private async void OnMarkPaidClicked(object sender, EventArgs e)
     {
-        var button = sender as Button;
-        var udhar = button?.BindingContext as Udhar;
-
-        if (udhar == null) return;
+        if (sender is not Button button) return;
+        if (button.BindingContext is not Udhar udhar) return;
 
         bool confirm = await DisplayAlert(
             "Confirm Payment",

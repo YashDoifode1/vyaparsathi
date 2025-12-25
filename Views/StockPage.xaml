@@ -25,14 +25,33 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
+                <!-- Total Categories -->
+                <Frame BackgroundColor="#4F46E5"
+                       CornerRadius="16"
+                       Padding="16"
+                       HasShadow="True">
+                    <VerticalStackLayout>
+                        <Label Text="Total Categories"
+                               FontSize="14"
+                               TextColor="White"/>
+                        <Label x:Name="TotalCategoriesLabel"
+                               Text="0"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </VerticalStackLayout>
+                </Frame>
+
                 <!-- Total Items -->
-                <Frame BackgroundColor="#2563EB"
+                <Frame Grid.Column="1"
+                       BackgroundColor="#2563EB"
                        CornerRadius="16"
                        Padding="16"
                        HasShadow="True">
@@ -49,7 +68,7 @@
                 </Frame>
 
                 <!-- Total Quantity -->
-                <Frame Grid.Column="1"
+                <Frame Grid.Row="1"
                        BackgroundColor="#16A34A"
                        CornerRadius="16"
                        Padding="16"
@@ -68,11 +87,11 @@
 
                 <!-- Low Stock Items -->
                 <Frame Grid.Row="1"
+                       Grid.Column="1"
                        BackgroundColor="#DC2626"
                        CornerRadius="16"
                        Padding="16"
-                       HasShadow="True"
-                       Grid.ColumnSpan="2">
+                       HasShadow="True">
                     <VerticalStackLayout>
                         <Label Text="Low Stock (&lt;10)"
                                FontSize="14"
@@ -87,11 +106,11 @@
 
                 <!-- Inventory Value -->
                 <Frame Grid.Row="2"
+                       Grid.ColumnSpan="2"
                        BackgroundColor="#F59E0B"
                        CornerRadius="16"
                        Padding="16"
-                       HasShadow="True"
-                       Grid.ColumnSpan="2">
+                       HasShadow="True">
                     <VerticalStackLayout>
                         <Label Text="Total Inventory Value"
                                FontSize="14"
