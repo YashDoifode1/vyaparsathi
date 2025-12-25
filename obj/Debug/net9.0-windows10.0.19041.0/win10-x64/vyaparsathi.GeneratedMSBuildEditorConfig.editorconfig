@@ -64,6 +64,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.AddItemP
 build_metadata.AdditionalFiles.TargetPath = Views\AddItemPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AddItemPage.xaml
 
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/BackupRestorePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.BackupRestorePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\BackupRestorePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\BackupRestorePage.xaml
+
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/BillingHistoryPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.BillingHistoryPage.xaml
@@ -99,6 +105,12 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.StockPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\StockPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\StockPage.xaml
+
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/UdharHistoryPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.UdharHistoryPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UdharHistoryPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UdharHistoryPage.xaml
 
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/UdharPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

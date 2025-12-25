@@ -9,17 +9,17 @@ public class Item
 
     public string Name { get; set; }
 
-    // Category Relation
-    public int CategoryId { get; set; }
-
-    // Pricing
+    // 🔹 Prices
     public decimal LandingPrice { get; set; }
     public decimal SellingPrice { get; set; }
 
-    // Stock
+    // 🔹 Stock
     public int StockQuantity { get; set; }
 
-    // Audit
+    // 🔹 Relations
+    public int CategoryId { get; set; }
+
+    // 🔹 Audit
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

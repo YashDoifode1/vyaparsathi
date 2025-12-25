@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="vyaparsathi.Views.BackupRestorePage"
+    Title="Backup &amp; Restore"
+    BackgroundColor="#F5F6FA">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Header -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Backup &amp; Restore"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="#1E293B"/>
+                <Label Text="Backup your app data or restore from a previous backup"
+                       FontSize="14"
+                       TextColor="#64748B"/>
+            </VerticalStackLayout>
+
+            <!-- Backup Options -->
+            <Frame CornerRadius="16"
+                   BackgroundColor="White"
+                   Padding="16"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label Text="Select Data to Backup"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B"/>
+
+                    <!-- Checkboxes -->
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox x:Name="CategoryCheck"/>
+                        <Label Text="Categories" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox x:Name="ItemCheck"/>
+                        <Label Text="Items" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox x:Name="UdharCheck"/>
+                        <Label Text="Udhar" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox x:Name="BillingCheck"/>
+                        <Label Text="Billing History" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox x:Name="ProfileCheck"/>
+                        <Label Text="Business Profile" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Button Text="💾 Backup Data"
+                            BackgroundColor="#2563EB"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            CornerRadius="14"
+                            Clicked="OnBackupClicked"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Restore Section -->
+            <Frame CornerRadius="16"
+                   BackgroundColor="White"
+                   Padding="16"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Restore Backup"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B"/>
+
+                    <Button Text="📂 Select Backup File"
+                            BackgroundColor="#F59E0B"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            CornerRadius="14"
+                            Clicked="OnSelectBackupClicked"/>
+
+                    <Button Text="♻ Restore Data"
+                            BackgroundColor="#16A34A"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            CornerRadius="14"
+                            Clicked="OnRestoreClicked"/>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

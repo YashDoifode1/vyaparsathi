@@ -7,7 +7,7 @@ public class Udhar
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
-    public int CustomerId { get; set; } // Link to Customer
+    public int CustomerId { get; set; }
 
     public decimal Amount { get; set; }
 
@@ -15,6 +15,8 @@ public class Udhar
 
     public DateTime Date { get; set; }
 
+    public bool IsPaid { get; set; }  // ✅ NEW
+
     [Ignore]
-    public string CustomerName { get; set; } // For display purposes
+    public string CustomerName { get; set; }
 }

@@ -47,12 +47,16 @@ public class DatabaseService
     public Task<int> SaveItemAsync(Item item)
     {
         item.UpdatedAt = DateTime.UtcNow;
+
         if (item.Id != 0)
             return _database.UpdateAsync(item);
 
         item.CreatedAt = DateTime.UtcNow;
+        item.StockQuantity = item.StockQuantity <= 0 ? 0 : item.StockQuantity;
+
         return _database.InsertAsync(item);
     }
+
 
     public Task<List<Item>> GetItemsAsync() =>
         _database.Table<Item>().OrderByDescending(i => i.CreatedAt).ToListAsync();
@@ -123,6 +127,22 @@ public class DatabaseService
     public Task<int> DeleteUdharAsync(Udhar udhar)
     {
         return _database.DeleteAsync(udhar);
+    }
+    // =======================
+    // UDHAR HISTORY
+    // =======================
+
+    public Task<List<Udhar>> GetUdharHistoryAsync()
+    {
+        return _database.Table<Udhar>()
+            .OrderByDescending(u => u.Date)
+            .ToListAsync();
+    }
+
+    public Task<int> MarkUdharPaidAsync(Udhar udhar)
+    {
+        udhar.IsPaid = true;
+        return _database.UpdateAsync(udhar);
     }
 
 

@@ -1,115 +1,72 @@
-using vyaparsathi.Models;
-using vyaparsathi.ViewModels;
+﻿using vyaparsathi.Models;
+using vyaparsathi.Services;
 
 namespace vyaparsathi.Views;
 
 public partial class StockPage : ContentPage
 {
-    private List<Category> _categories;
-    private List<Item> _items;
-    private List<ItemViewModel> _itemViewModels;
-    private Item _editingItem;
+    private readonly DatabaseService _database;
+    private List<Item> _items = new();
 
     public StockPage()
     {
         InitializeComponent();
+        _database = App.Database;
+        LoadCategories();
     }
 
-    protected override async void OnAppearing()
+    private async void LoadCategories()
     {
-        base.OnAppearing();
+        var categories = await _database.GetCategoriesAsync();
+        CategoryPicker.ItemsSource = categories;
+        CategoryPicker.ItemDisplayBinding = new Binding("Name");
+    }
 
-        _categories = await App.Database.GetCategoriesAsync();
-        _items = await App.Database.GetItemsAsync();
+    private async void OnCategoryChanged(object sender, EventArgs e)
+    {
+        if (CategoryPicker.SelectedItem is not Category category)
+            return;
 
-        // Bind Pickers
+        _items = (await _database.GetItemsAsync())
+                    .Where(i => i.CategoryId == category.Id)
+                    .ToList();
+
         ItemPicker.ItemsSource = _items;
         ItemPicker.ItemDisplayBinding = new Binding("Name");
 
-        CategoryPicker.ItemsSource = _categories;
-        CategoryPicker.ItemDisplayBinding = new Binding("Name");
-
-        BuildItemViewModels();
-        UpdateSummary();
+        ItemPicker.SelectedItem = null;
+        PriceEntry.Text = string.Empty;
+        StockEntry.Text = string.Empty;
     }
 
-    private void BuildItemViewModels()
+    private void OnItemChanged(object sender, EventArgs e)
     {
-        _itemViewModels = (from item in _items
-                           join cat in _categories
-                           on item.CategoryId equals cat.Id
-                           select new ItemViewModel(item, cat.Name))
-                          .ToList();
+        if (ItemPicker.SelectedItem is not Item item)
+            return;
 
-        StockCollectionView.ItemsSource = _itemViewModels;
+        PriceEntry.Text = item.SellingPrice.ToString("0.##");
     }
 
-    private void UpdateSummary()
-    {
-        TotalItemsLabel.Text = _items.Count.ToString();
-        TotalStockLabel.Text = _items.Sum(i => i.Stock).ToString();
-        TotalValueLabel.Text = _items.Sum(i => i.Stock * i.SellingPrice).ToString("F2");
-    }
-
-    // Save / Update Stock
+    // ✅ FIXED EVENT HANDLER
     private async void OnSaveStockClicked(object sender, EventArgs e)
     {
-        if (ItemPicker.SelectedItem == null ||
-            !int.TryParse(StockQuantityEntry.Text, out int stock) ||
-            !decimal.TryParse(StockPriceEntry.Text, out decimal price))
+        if (ItemPicker.SelectedItem is not Item item)
         {
-            await DisplayAlert("Error", "Select an item and enter valid stock/price.", "OK");
+            await DisplayAlert("Error", "Please select an item", "OK");
             return;
         }
 
-        var selectedItem = ItemPicker.SelectedItem as Item;
+        if (!int.TryParse(StockEntry.Text, out int quantity))
+        {
+            await DisplayAlert("Error", "Enter valid stock quantity", "OK");
+            return;
+        }
 
-        selectedItem.Stock = stock;
-        selectedItem.SellingPrice = price;
+        item.StockQuantity += quantity;
+        await _database.SaveItemAsync(item);
 
-        await App.Database.SaveItemAsync(selectedItem);
+        await DisplayAlert("Success", "Stock updated successfully", "OK");
 
-        ClearStockForm();
-        _items = await App.Database.GetItemsAsync();
-        BuildItemViewModels();
-        UpdateSummary();
-    }
-
-    private void ClearStockForm()
-    {
-        ItemPicker.SelectedIndex = -1;
-        StockQuantityEntry.Text = "";
-        StockPriceEntry.Text = "";
-    }
-
-    // Edit Stock
-    private void OnEditStockClicked(object sender, EventArgs e)
-    {
-        var button = sender as Button;
-        var vm = button?.CommandParameter as ItemViewModel;
-        if (vm == null) return;
-
-        _editingItem = vm.Item;
-        ItemPicker.SelectedItem = _editingItem;
-        StockQuantityEntry.Text = _editingItem.Stock.ToString();
-        StockPriceEntry.Text = _editingItem.SellingPrice.ToString();
-    }
-
-    // Delete Stock
-    private async void OnDeleteStockClicked(object sender, EventArgs e)
-    {
-        var button = sender as Button;
-        var vm = button?.CommandParameter as ItemViewModel;
-        if (vm == null) return;
-
-        bool confirm = await DisplayAlert("Delete Item", $"Delete '{vm.Name}'?", "Delete", "Cancel");
-        if (!confirm) return;
-
-        await App.Database.DeleteItemAsync(vm.Item);
-        _items = await App.Database.GetItemsAsync();
-        BuildItemViewModels();
-        UpdateSummary();
+        StockEntry.Text = string.Empty;
     }
 }
-
-

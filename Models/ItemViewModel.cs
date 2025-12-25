@@ -4,18 +4,27 @@ namespace vyaparsathi.ViewModels;
 
 public class ItemViewModel
 {
-    public Item Item { get; }
-    public string Name => Item.Name;
-    public string CategoryName { get; }
-    public int Stock => Item.Stock;
-    public decimal LandingPrice => Item.LandingPrice;
-    public decimal SellingPrice => Item.SellingPrice;
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string CategoryName { get; set; }
+    public decimal LandingPrice { get; set; }
+    public decimal SellingPrice { get; set; }
+    public int StockQuantity { get; set; }
 
-    public decimal TotalValue => Stock * SellingPrice;
+    public string StockText => $"Stock: {StockQuantity}";
+    public string PriceText => $"₹{SellingPrice:N2}";
 
+    // ✅ CONSTRUCTOR FIX
     public ItemViewModel(Item item, string categoryName)
     {
-        Item = item;
+        Id = item.Id;
+        Name = item.Name;
         CategoryName = categoryName;
+        LandingPrice = item.LandingPrice;
+        SellingPrice = item.SellingPrice;
+        StockQuantity = item.StockQuantity;
     }
+
+    // Optional empty constructor (for binding)
+    public ItemViewModel() { }
 }

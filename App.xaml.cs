@@ -4,18 +4,16 @@ namespace vyaparsathi;
 
 public partial class App : Application
 {
-    public static DatabaseService Database { get; private set; }
+    // Public setter allows re-initializing Database from BackupRestorePage
+    public static DatabaseService Database { get; set; }
+    public static string DatabasePath { get; private set; }
 
     public App()
     {
         InitializeComponent();
 
-        string dbPath = Path.Combine(
-            FileSystem.AppDataDirectory,
-            "vyaparsathi.db3"
-        );
-
-        Database = new DatabaseService(dbPath);
+        DatabasePath = Path.Combine(FileSystem.AppDataDirectory, "vyaparsathi.db3");
+        Database = new DatabaseService(DatabasePath);
 
         MainPage = new AppShell();
     }
