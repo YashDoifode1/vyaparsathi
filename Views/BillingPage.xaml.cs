@@ -7,14 +7,34 @@ public partial class BillingPage : ContentPage
 {
     private List<Category> _categories;
     private List<Item> _items;
-    private ObservableCollection<BillItem> _billItems = new ObservableCollection<BillItem>();
+    private List<Customer> _customers;
+    private Customer _selectedCustomer;
+
+    private ObservableCollection<BillItem> _billItems = new();
 
     public BillingPage()
     {
         InitializeComponent();
         BillItemsCollection.ItemsSource = _billItems;
+
         LoadCategories();
+        LoadCustomers();
         UpdateTotal();
+    }
+
+    private async void LoadCustomers()
+    {
+        _customers = await App.Database.GetCustomersAsync();
+        CustomerPicker.ItemsSource = _customers.Select(c => c.Name).ToList();
+    }
+
+    private void OnCustomerSelected(object sender, EventArgs e)
+    {
+        if (CustomerPicker.SelectedIndex < 0)
+            return;
+
+        _selectedCustomer = _customers[CustomerPicker.SelectedIndex];
+        CustomerNameEntry.Text = _selectedCustomer.Name;
     }
 
     private async void LoadCategories()
@@ -29,13 +49,12 @@ public partial class BillingPage : ContentPage
             return;
 
         var selectedCategory = _categories[CategoryPicker.SelectedIndex];
+
         _items = (await App.Database.GetItemsAsync())
             .Where(i => i.CategoryId == selectedCategory.Id)
             .ToList();
 
         ItemPicker.ItemsSource = _items.Select(i => i.Name).ToList();
-        ItemPicker.SelectedIndex = -1;
-        PriceEntry.Text = "";
     }
 
     private void OnItemChanged(object sender, EventArgs e)
@@ -43,43 +62,40 @@ public partial class BillingPage : ContentPage
         if (ItemPicker.SelectedIndex < 0)
             return;
 
-        var selectedItem = _items[ItemPicker.SelectedIndex];
-        PriceEntry.Text = selectedItem.SellingPrice.ToString("F2"); // auto-fill selling price
-    }
-
-    private void UpdateTotal()
-    {
-        decimal total = _billItems.Sum(i => i.Total);
-        TotalLabel.Text = $"Total: ₹{total:F2}";
+        PriceEntry.Text = _items[ItemPicker.SelectedIndex]
+            .SellingPrice.ToString("F2");
     }
 
     private void OnAddItemClicked(object sender, EventArgs e)
     {
-        if (ItemPicker.SelectedIndex < 0 || string.IsNullOrWhiteSpace(QuantityEntry.Text) || string.IsNullOrWhiteSpace(PriceEntry.Text))
+        if (ItemPicker.SelectedIndex < 0)
             return;
 
-        var billItem = new BillItem
+        var item = new BillItem
         {
             ItemName = ItemPicker.SelectedItem.ToString(),
             Quantity = decimal.Parse(QuantityEntry.Text),
             Price = decimal.Parse(PriceEntry.Text)
         };
 
-        _billItems.Add(billItem);
+        _billItems.Add(item);
+        UpdateTotal();
 
-        // Clear inputs
         QuantityEntry.Text = "";
         PriceEntry.Text = "";
         ItemPicker.SelectedIndex = -1;
+    }
 
-        UpdateTotal();
+    private void UpdateTotal()
+    {
+        TotalLabel.Text = $"Total: ₹{_billItems.Sum(i => i.Total):F2}";
     }
 
     private async void OnSaveBillClicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(CustomerNameEntry.Text) || _billItems.Count == 0)
         {
-            await DisplayAlert("Error", "Enter customer name and add at least one item.", "OK");
+            await DisplayAlert("Error", "Customer name and items required.", "OK");
             return;
         }
 
@@ -97,9 +113,23 @@ public partial class BillingPage : ContentPage
             await App.Database.SaveBillItemAsync(item);
         }
 
-        await DisplayAlert("Success", "Bill saved successfully!", "OK");
+        if (UdharCheckBox.IsChecked && _selectedCustomer != null)
+        {
+            var udhar = new Udhar
+            {
+                CustomerId = _selectedCustomer.Id,
+                Amount = _billItems.Sum(i => i.Total),
+                IsPaid = false
+            };
+
+            await App.Database.SaveUdharAsync(udhar);
+        }
+
+        await DisplayAlert("Success", "Bill saved successfully.", "OK");
 
         CustomerNameEntry.Text = "";
+        CustomerPicker.SelectedIndex = -1;
+        UdharCheckBox.IsChecked = false;
         _billItems.Clear();
         UpdateTotal();
     }
@@ -113,4 +143,6 @@ public partial class BillingPage : ContentPage
     {
         DisplayAlert("Share", "Sharing bill...", "OK");
     }
+
+
 }

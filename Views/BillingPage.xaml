@@ -19,53 +19,93 @@
             <!-- Customer Details -->
             <Frame CornerRadius="16" BackgroundColor="White" Padding="16" HasShadow="True">
                 <VerticalStackLayout Spacing="12">
-                    <Label Text="Customer Name" FontSize="14" FontAttributes="Bold" TextColor="#1E293B"/>
-                    <Entry x:Name="CustomerNameEntry" Placeholder="Enter customer name" HeightRequest="48" BackgroundColor="#F9FAFB" ClearButtonVisibility="WhileEditing"/>
-                    <Label Text="Date" FontSize="14" FontAttributes="Bold" TextColor="#1E293B"/>
-                    <DatePicker x:Name="BillDatePicker" Date="{x:Static sys:DateTime.Now}" BackgroundColor="#F9FAFB"/>
+
+                    <Label Text="Select Customer" FontSize="14" FontAttributes="Bold"/>
+                    <Picker x:Name="CustomerPicker"
+                            Title="Choose existing customer"
+                            HeightRequest="48"
+                            BackgroundColor="#F9FAFB"
+                            SelectedIndexChanged="OnCustomerSelected"/>
+
+                    <Label Text="Or Enter Customer Name" FontSize="14" FontAttributes="Bold"/>
+                    <Entry x:Name="CustomerNameEntry"
+                           Placeholder="Enter customer name"
+                           HeightRequest="48"
+                           BackgroundColor="#F9FAFB"/>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox x:Name="UdharCheckBox"/>
+                        <Label Text="Mark as Udhar" VerticalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Label Text="Date" FontSize="14" FontAttributes="Bold"/>
+                    <DatePicker x:Name="BillDatePicker"
+                                Date="{x:Static sys:DateTime.Now}"
+                                BackgroundColor="#F9FAFB"/>
                 </VerticalStackLayout>
             </Frame>
 
             <!-- Add Items -->
             <Frame CornerRadius="16" BackgroundColor="White" Padding="16" HasShadow="True">
                 <VerticalStackLayout Spacing="12">
-                    <Label Text="Add Items" FontSize="16" FontAttributes="Bold" TextColor="#1E293B"/>
 
-                    <!-- Category Picker -->
-                    <Picker x:Name="CategoryPicker" Title="Select Category" SelectedIndexChanged="OnCategoryChanged" HeightRequest="48" BackgroundColor="#F9FAFB"/>
+                    <Label Text="Add Items" FontSize="16" FontAttributes="Bold"/>
 
-                    <!-- Item Picker -->
-                    <Picker x:Name="ItemPicker" Title="Select Item" SelectedIndexChanged="OnItemChanged" HeightRequest="48" BackgroundColor="#F9FAFB"/>
+                    <Picker x:Name="CategoryPicker"
+                            Title="Select Category"
+                            SelectedIndexChanged="OnCategoryChanged"/>
 
-                    <!-- Quantity & Price -->
+                    <Picker x:Name="ItemPicker"
+                            Title="Select Item"
+                            SelectedIndexChanged="OnItemChanged"/>
+
                     <HorizontalStackLayout Spacing="8">
-                        <Entry x:Name="QuantityEntry" Placeholder="Qty" Keyboard="Numeric" HeightRequest="48" BackgroundColor="#F9FAFB" WidthRequest="60"/>
-                        <Entry x:Name="PriceEntry" Placeholder="Price" Keyboard="Numeric" HeightRequest="48" BackgroundColor="#F9FAFB" WidthRequest="80"/>
-                        <Button Text="➕" BackgroundColor="#2563EB" TextColor="White" CornerRadius="12" Clicked="OnAddItemClicked"/>
+                        <Entry x:Name="QuantityEntry" Placeholder="Qty" Keyboard="Numeric" WidthRequest="60"/>
+                        <Entry x:Name="PriceEntry" Placeholder="Price" Keyboard="Numeric" WidthRequest="80"/>
+                        <Button Text="➕" Clicked="OnAddItemClicked"/>
                     </HorizontalStackLayout>
 
-                    <!-- Bill Items Collection -->
                     <CollectionView x:Name="BillItemsCollection" HeightRequest="200">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <HorizontalStackLayout Spacing="10" Padding="6">
+                                <HorizontalStackLayout Spacing="10">
                                     <Label Text="{Binding ItemName}" WidthRequest="120"/>
-                                    <Label Text="{Binding Quantity}" WidthRequest="50"/>
-                                    <Label Text="{Binding Price, StringFormat='₹{0:F2}'}" WidthRequest="70"/>
-                                    <Label Text="{Binding Total, StringFormat='₹{0:F2}'}" WidthRequest="70"/>
-                                    <Button Text="❌" BackgroundColor="#EF4444" TextColor="White" CornerRadius="12" Command="{Binding Source={x:Reference BillItemsCollection}, Path=BindingContext.RemoveItemCommand}" CommandParameter="{Binding .}"/>
+                                    <Label Text="{Binding Quantity}" WidthRequest="40"/>
+                                    <Label Text="{Binding Price, StringFormat='₹{0:F2}'}"/>
+                                    <Label Text="{Binding Total, StringFormat='₹{0:F2}'}"/>
                                 </HorizontalStackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <Label x:Name="TotalLabel" Text="Total: ₹0.00" FontSize="16" FontAttributes="Bold" HorizontalOptions="End"/>
+                    <Label x:Name="TotalLabel"
+                           Text="Total: ₹0.00"
+                           FontAttributes="Bold"
+                           HorizontalOptions="End"/>
 
                     <HorizontalStackLayout Spacing="12">
-                        <Button Text="🧾 Save Bill" BackgroundColor="#16A34A" TextColor="White" CornerRadius="14" HeightRequest="48" Clicked="OnSaveBillClicked"/>
-                        <Button Text="🖨 Print" BackgroundColor="#2563EB" TextColor="White" CornerRadius="14" HeightRequest="48" Clicked="OnPrintClicked"/>
-                        <Button Text="📤 Share" BackgroundColor="#F59E0B" TextColor="White" CornerRadius="14" HeightRequest="48" Clicked="OnShareClicked"/>
+                        <Button Text="🧾 Save Bill"
+            BackgroundColor="#16A34A"
+            TextColor="White"
+            CornerRadius="14"
+            HeightRequest="48"
+            Clicked="OnSaveBillClicked"/>
+
+                        <Button Text="🖨 Print"
+            BackgroundColor="#2563EB"
+            TextColor="White"
+            CornerRadius="14"
+            HeightRequest="48"
+            Clicked="OnPrintClicked"/>
+
+                        <Button Text="📤 Share"
+            BackgroundColor="#F59E0B"
+            TextColor="White"
+            CornerRadius="14"
+            HeightRequest="48"
+            Clicked="OnShareClicked"/>
                     </HorizontalStackLayout>
+
                 </VerticalStackLayout>
             </Frame>
 

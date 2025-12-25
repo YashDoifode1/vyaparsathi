@@ -11,28 +11,56 @@
 
         <!-- Header -->
         <VerticalStackLayout Spacing="4">
-            <Label Text="Billing History" FontSize="26" FontAttributes="Bold" TextColor="#1E293B"/>
-            <Label Text="View past bills and filter by date" FontSize="14" TextColor="#64748B"/>
+            <Label Text="Billing History"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   TextColor="#1E293B"/>
+            <Label Text="Search and filter past bills"
+                   FontSize="14"
+                   TextColor="#64748B"/>
         </VerticalStackLayout>
+
+        <!-- Search by Name -->
+        <SearchBar x:Name="CustomerSearchBar"
+                   Placeholder="Search by customer name"
+                   TextChanged="OnSearchChanged"/>
 
         <!-- Date Filter -->
         <HorizontalStackLayout Spacing="8">
-            <DatePicker x:Name="StartDatePicker" Date="{x:Static sys:DateTime.Now}" />
-            <DatePicker x:Name="EndDatePicker" Date="{x:Static sys:DateTime.Now}" />
-            <Button Text="Filter" BackgroundColor="#2563EB" TextColor="White" CornerRadius="12" Clicked="OnFilterClicked"/>
+            <DatePicker x:Name="StartDatePicker" />
+            <DatePicker x:Name="EndDatePicker" />
+            <Button Text="Filter"
+                    BackgroundColor="#2563EB"
+                    TextColor="White"
+                    CornerRadius="12"
+                    Clicked="OnFilterClicked"/>
         </HorizontalStackLayout>
 
         <!-- Bills List -->
-        <CollectionView x:Name="BillsCollection" SelectionMode="Single" SelectionChanged="OnBillSelected">
+        <CollectionView x:Name="BillsCollection"
+                        SelectionMode="Single"
+                        SelectionChanged="OnBillSelected">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame CornerRadius="12" Padding="12" BackgroundColor="White" HasShadow="True" Margin="0,4">
-                        <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                    <Frame CornerRadius="12"
+                           Padding="12"
+                           BackgroundColor="White"
+                           HasShadow="True"
+                           Margin="0,4">
+                        <HorizontalStackLayout Spacing="12">
                             <VerticalStackLayout>
-                                <Label Text="{Binding CustomerName}" FontAttributes="Bold" FontSize="16"/>
-                                <Label Text="{Binding Date, StringFormat='Date: {0:dd/MM/yyyy}'}" FontSize="12" TextColor="#64748B"/>
+                                <Label Text="{Binding CustomerName}"
+                                       FontAttributes="Bold"
+                                       FontSize="16"/>
+                                <Label Text="{Binding Date, StringFormat='Date: {0:dd/MM/yyyy}'}"
+                                       FontSize="12"
+                                       TextColor="#64748B"/>
                             </VerticalStackLayout>
-                            <Label Text="{Binding TotalAmount, StringFormat='₹{0:F2}'}" FontSize="16" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+
+                            <Label Text="{Binding TotalAmount, StringFormat='₹{0:F2}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="EndAndExpand"/>
                         </HorizontalStackLayout>
                     </Frame>
                 </DataTemplate>
