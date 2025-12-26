@@ -5,6 +5,7 @@ namespace vyaparsathi.Views;
 public partial class BillingHistoryPage : ContentPage
 {
     private List<Bill> _allBills = new();
+    private List<string> _customers = new();
 
     public BillingHistoryPage()
     {
@@ -22,6 +23,11 @@ public partial class BillingHistoryPage : ContentPage
             bill.TotalAmount = items.Sum(i => i.Total);
         }
 
+        // Populate Customer Picker
+        _customers = _allBills.Select(b => b.CustomerName).Distinct().OrderBy(c => c).ToList();
+        CustomerPicker.ItemsSource = _customers;
+        CustomerPicker.SelectedIndex = -1; // No selection initially
+
         ApplyFilters();
     }
 
@@ -30,14 +36,14 @@ public partial class BillingHistoryPage : ContentPage
         ApplyFilters();
     }
 
-    private void OnSearchChanged(object sender, TextChangedEventArgs e)
+    private void OnFilterChanged(object sender, EventArgs e)
     {
         ApplyFilters();
     }
 
     private void ApplyFilters()
     {
-        var searchText = CustomerSearchBar.Text?.Trim().ToLower() ?? string.Empty;
+        var selectedCustomer = CustomerPicker.SelectedItem as string;
 
         var startDate = StartDatePicker.Date.Date;
         var endDate = EndDatePicker.Date.Date.AddDays(1).AddSeconds(-1);
@@ -46,8 +52,7 @@ public partial class BillingHistoryPage : ContentPage
             .Where(b =>
                 b.Date >= startDate &&
                 b.Date <= endDate &&
-                (string.IsNullOrEmpty(searchText) ||
-                 b.CustomerName.ToLower().Contains(searchText)))
+                (string.IsNullOrEmpty(selectedCustomer) || b.CustomerName == selectedCustomer))
             .OrderByDescending(b => b.Date)
             .ToList();
 

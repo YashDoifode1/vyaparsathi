@@ -8,11 +8,23 @@ namespace vyaparsathi.Views;
 public partial class UdharNotificationPage : ContentPage
 {
     private List<Customer> _customers = new();
+    private BusinessProfile _businessProfile;
 
     public UdharNotificationPage()
     {
         InitializeComponent();
+        LoadBusinessProfile();
         LoadCustomers();
+    }
+
+    private async void LoadBusinessProfile()
+    {
+        // Assuming only one business profile exists
+        _businessProfile = await App.Database.GetBusinessProfileAsync();
+        if (_businessProfile == null)
+        {
+            await DisplayAlert("Error", "Business profile not found. Configure API credentials.", "OK");
+        }
     }
 
     private async void LoadCustomers()
@@ -23,6 +35,12 @@ public partial class UdharNotificationPage : ContentPage
 
     private async void OnSendSmsClicked(object sender, EventArgs e)
     {
+        if (_businessProfile == null)
+        {
+            await DisplayAlert("Error", "Business profile not configured.", "OK");
+            return;
+        }
+
         if (CustomerPicker.SelectedIndex < 0)
         {
             await DisplayAlert("Error", "Please select a customer.", "OK");
@@ -62,19 +80,25 @@ public partial class UdharNotificationPage : ContentPage
         }
     }
 
-    // Example using HttpClient to send SMS via an API
     private async Task<bool> SendSmsAsync(string phoneNumber, string message)
     {
         try
         {
+            if (_businessProfile == null) return false;
+
             using var client = new HttpClient();
 
-            // Replace below with your actual SMS API details
-            string apiKey = "YOUR_API_KEY";
-            string senderId = "VYAPSATHI";
+            string apiKey = _businessProfile.SmsApiKey;
+            string senderId = _businessProfile.SmsSenderId ?? "VYAPSATHI";
+            string smsUrl = _businessProfile.SmsApiUrl;
+
+            if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(senderId) || string.IsNullOrEmpty(smsUrl))
+                return false;
+
             string encodedMessage = HttpUtility.UrlEncode(message);
 
-            string url = $"https://api.yoursmsgateway.com/send?apiKey={apiKey}&to={phoneNumber}&sender={senderId}&message={encodedMessage}";
+            // Build request URL using the business profile details
+            string url = $"{smsUrl}?apiKey={apiKey}&to={phoneNumber}&sender={senderId}&message={encodedMessage}";
 
             var response = await client.GetAsync(url);
             return response.IsSuccessStatusCode;

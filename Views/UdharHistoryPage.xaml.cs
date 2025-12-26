@@ -1,5 +1,4 @@
 ﻿using vyaparsathi.Models;
-using vyaparsathi.Services;
 
 namespace vyaparsathi.Views;
 
@@ -34,7 +33,8 @@ public partial class UdharHistoryPage : ContentPage
         // Map customer names
         foreach (var u in _allUdhars)
         {
-            u.CustomerName = _customers.FirstOrDefault(c => c.Id == u.CustomerId)?.Name ?? "Unknown";
+            u.CustomerName = _customers
+                .FirstOrDefault(c => c.Id == u.CustomerId)?.Name ?? "Unknown";
         }
 
         ApplyFilters();
@@ -44,7 +44,10 @@ public partial class UdharHistoryPage : ContentPage
     {
         var filtered = _allUdhars.AsEnumerable();
 
-        // Customer dropdown filter
+        // Only unpaid udhar
+        filtered = filtered.Where(u => !u.IsPaid);
+
+        // Customer filter
         if (_selectedCustomerId.HasValue)
         {
             filtered = filtered.Where(u => u.CustomerId == _selectedCustomerId.Value);
@@ -54,15 +57,19 @@ public partial class UdharHistoryPage : ContentPage
         var keyword = SearchEntry.Text?.ToLower() ?? "";
         if (!string.IsNullOrWhiteSpace(keyword))
         {
-            filtered = filtered.Where(u => u.CustomerName.ToLower().Contains(keyword));
+            filtered = filtered.Where(u =>
+                u.CustomerName.ToLower().Contains(keyword));
         }
 
-        UdharCollection.ItemsSource = filtered.ToList();
+        UdharCollection.ItemsSource = filtered
+            .OrderByDescending(u => u.Date)
+            .ToList();
     }
 
     private void OnCustomerFilterChanged(object sender, EventArgs e)
     {
         var index = CustomerPicker.SelectedIndex;
+
         if (index >= 0 && index < _customers.Count)
             _selectedCustomerId = _customers[index].Id;
         else
@@ -79,11 +86,11 @@ public partial class UdharHistoryPage : ContentPage
     private async void OnMarkPaidClicked(object sender, EventArgs e)
     {
         if (sender is not Button button) return;
-        if (button.BindingContext is not Udhar udhar) return;
+        if (button.CommandParameter is not Udhar udhar) return;
 
         bool confirm = await DisplayAlert(
             "Confirm Payment",
-            $"Mark ₹{udhar.Amount} as paid?",
+            $"Mark ₹{udhar.Amount:N2} as paid?",
             "Yes",
             "Cancel");
 

@@ -63,6 +63,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.AddCateg
 build_metadata.AdditionalFiles.TargetPath = Views\AddCategoryPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AddCategoryPage.xaml
 
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/AddCustomerPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.AddCustomerPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\AddCustomerPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\AddCustomerPage.xaml
+
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/AddItemPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.AddItemPage.xaml
@@ -86,6 +92,12 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.BillingPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\BillingPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\BillingPage.xaml
+
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/CustomerDetailsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.CustomerDetailsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\CustomerDetailsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\CustomerDetailsPage.xaml
 
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/CustomersPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
@@ -123,11 +135,23 @@ build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.Settings
 build_metadata.AdditionalFiles.TargetPath = Views\SettingsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\SettingsPage.xaml
 
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/StartupPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.StartupPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\StartupPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\StartupPage.xaml
+
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/StockPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.StockPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\StockPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\StockPage.xaml
+
+[C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/UdharDashboardPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = vyaparsathi.Views.UdharDashboardPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UdharDashboardPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UdharDashboardPage.xaml
 
 [C:/Users/johndeo/source/repos/vyaparsathi/vyaparsathi/Views/UdharHistoryPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

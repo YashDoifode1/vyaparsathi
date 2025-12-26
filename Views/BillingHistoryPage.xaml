@@ -14,7 +14,7 @@
                    FontSize="26"
                    FontAttributes="Bold"
                    TextColor="#0F172A"/>
-            <Label Text="Search, filter, and review past bills"
+            <Label Text="Filter and review past bills"
                    FontSize="14"
                    TextColor="#64748B"/>
         </VerticalStackLayout>
@@ -32,11 +32,10 @@
                        FontAttributes="Bold"
                        TextColor="#0F172A"/>
 
-                <!-- Search -->
-                <SearchBar x:Name="CustomerSearchBar"
-                           Placeholder="Search by customer name"
-                           FontSize="14"
-                           TextChanged="OnSearchChanged"/>
+                <!-- Customer Picker -->
+                <Picker x:Name="CustomerPicker"
+                        Title="Select Customer"
+                        SelectedIndexChanged="OnFilterChanged"/>
 
                 <!-- Date Range -->
                 <Grid ColumnSpacing="12">

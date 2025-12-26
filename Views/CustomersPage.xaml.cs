@@ -1,62 +1,74 @@
+using System.Windows.Input;
 using vyaparsathi.Models;
 
 namespace vyaparsathi.Views;
 
 public partial class CustomersPage : ContentPage
 {
-    private List<Customer> _customers = new List<Customer>();
+    private List<CustomerViewModel> _allCustomers = new();
 
     public CustomersPage()
     {
         InitializeComponent();
-        LoadCustomers();
+        BindingContext = this;
     }
 
-    private async void LoadCustomers()
+    protected override async void OnAppearing()
     {
-        _customers = await App.Database.GetCustomersAsync();
-        CustomersCollection.ItemsSource = _customers;
+        base.OnAppearing();
+        await LoadCustomersAsync();
     }
 
-    private async void OnSaveCustomerClicked(object sender, EventArgs e)
+    private async Task LoadCustomersAsync()
     {
-        if (string.IsNullOrWhiteSpace(NameEntry.Text))
+        var customers = await App.Database.GetCustomersAsync();
+        var udhars = await App.Database.GetUdharsAsync();
+
+        _allCustomers = customers.Select(c =>
         {
-            await DisplayAlert("Error", "Customer name is required.", "OK");
-            return;
-        }
+            var pending = udhars
+                .Where(u => u.CustomerId == c.Id && !u.IsPaid)
+                .ToList();
 
-        var customer = new Customer
-        {
-            Name = NameEntry.Text,
-            PhoneNumber = PhoneEntry.Text,
-            Gender = GenderPicker.SelectedItem?.ToString() ?? "",
-            Address = AddressEditor.Text
-        };
+            decimal due = pending.Sum(u => u.Amount);
+            bool overdue = pending.Any(u => u.DueDate < DateTime.Today);
 
-        await App.Database.SaveCustomerAsync(customer);
+            return new CustomerViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                PhoneNumber = c.PhoneNumber,
 
-        NameEntry.Text = "";
-        PhoneEntry.Text = "";
-        GenderPicker.SelectedIndex = -1;
-        AddressEditor.Text = "";
+                DueAmount = due,
+                DueLabel = due > 0 ? "Due" : "Paid",
+                DueStatus = overdue ? "Overdue" : "Active",
 
-        LoadCustomers();
+                AmountColor = due > 0 ? Colors.Red : Colors.Green,
+                StatusColor = overdue ? Colors.Red : Colors.Green
+            };
+        }).ToList();
+
+        CustomersCollection.ItemsSource = _allCustomers;
     }
 
-    private async void OnDeleteCustomerClicked(object sender, EventArgs e)
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        var button = sender as Button;
-        var customer = button?.CommandParameter as Customer;
+        var text = e.NewTextValue?.ToLower() ?? "";
 
-        if (customer == null)
-            return;
-
-        var confirm = await DisplayAlert("Confirm", $"Delete customer {customer.Name}?", "Yes", "No");
-        if (!confirm)
-            return;
-
-        await App.Database.DeleteCustomerAsync(customer);
-        LoadCustomers();
+        CustomersCollection.ItemsSource = _allCustomers
+            .Where(c =>
+                c.Name.ToLower().Contains(text) ||
+                c.PhoneNumber.Contains(text))
+            .ToList();
     }
+
+    private async void OnAddCustomerClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new AddCustomerPage());
+    }
+
+    public ICommand OpenCustomerCommand => new Command<CustomerViewModel>(async customer =>
+    {
+        await Navigation.PushAsync(new CustomerDetailsPage(customer.Id));
+    });
 }

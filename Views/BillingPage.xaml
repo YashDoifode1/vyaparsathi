@@ -5,208 +5,197 @@
     xmlns:sys="clr-namespace:System;assembly=netstandard"
     x:Class="vyaparsathi.Views.BillingPage"
     Title="Billing"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="#F3F4F6">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="24">
+        <VerticalStackLayout Spacing="20">
 
-            <!-- Page Header -->
-            <VerticalStackLayout Spacing="4">
-                <Label Text="Create Bill"
-                       FontSize="26"
-                       FontAttributes="Bold"
-                       TextColor="#0F172A"/>
-
-                <Label Text="Generate a new bill for your customer"
-                       FontSize="14"
-                       TextColor="#64748B"/>
-            </VerticalStackLayout>
-
-            <!-- Customer Details -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="18"
-                   Padding="18"
-                   HasShadow="True">
-
-                <VerticalStackLayout Spacing="16">
-
-                    <Label Text="Customer Details"
-                           FontSize="18"
+            <!-- HEADER 
+            <Grid BackgroundColor="#2563EB" Padding="20">
+                <VerticalStackLayout>
+                    <Label Text="Create Bill"
+                           FontSize="26"
                            FontAttributes="Bold"
-                           TextColor="#0F172A"/>
-
-                    <Picker x:Name="CustomerPicker"
-                            Title="Select existing customer"
-                            HeightRequest="50"
-                            BackgroundColor="#F1F5F9"
-                            SelectedIndexChanged="OnCustomerSelected"/>
-
-                    <Entry x:Name="CustomerNameEntry"
-                           Placeholder="Or enter customer name"
-                           HeightRequest="50"
-                           BackgroundColor="#F1F5F9"/>
-
-                    <Grid ColumnSpacing="12">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <CheckBox x:Name="UdharCheckBox"/>
-                        <Label Text="Mark this bill as Udhar"
-                               Grid.Column="1"
-                               VerticalTextAlignment="Center"
-                               TextColor="#334155"/>
-                    </Grid>
-
-                    <DatePicker x:Name="BillDatePicker"
-                                Date="{x:Static sys:DateTime.Now}"
-                                BackgroundColor="#F1F5F9"/>
+                           TextColor="White"/>
+                    <Label Text="Generate bill for customer"
+                           FontSize="14"
+                           TextColor="#DBEAFE"/>
                 </VerticalStackLayout>
-            </Frame>
+            </Grid>-->
 
-            <!-- Add Items -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="18"
-                   Padding="18"
-                   HasShadow="True">
+            <!-- CONTENT -->
+            <VerticalStackLayout Padding="20" Spacing="18">
 
-                <VerticalStackLayout Spacing="16">
+                <!-- CUSTOMER DETAILS -->
+                <Frame BackgroundColor="White" CornerRadius="18" Padding="18">
+                    <VerticalStackLayout Spacing="14">
 
-                    <Label Text="Bill Items"
-                           FontSize="18"
-                           FontAttributes="Bold"
-                           TextColor="#0F172A"/>
-
-                    <Picker x:Name="CategoryPicker"
-                            Title="Select category"
-                            SelectedIndexChanged="OnCategoryChanged"/>
-
-                    <Picker x:Name="ItemPicker"
-                            Title="Select item"
-                            SelectedIndexChanged="OnItemChanged"/>
-
-                    <!-- Item Entry Row -->
-                    <Grid ColumnSpacing="12">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Entry x:Name="QuantityEntry"
-                               Placeholder="Qty"
-                               Keyboard="Numeric"
-                               WidthRequest="70"
-                               BackgroundColor="#F1F5F9"/>
-
-                        <Entry x:Name="PriceEntry"
-                               Placeholder="Price"
-                               Keyboard="Numeric"
-                               WidthRequest="100"
-                               BackgroundColor="#F1F5F9"
-                               Grid.Column="1"/>
-
-                        <Button Text="Add"
-                                Grid.Column="2"
-                                CornerRadius="12"
-                                HeightRequest="48"
-                                FontAttributes="Bold"
-                                BackgroundColor="#2563EB"
-                                TextColor="White"
-                                Clicked="OnAddItemClicked"/>
-                    </Grid>
-
-                    <!-- Items List -->
-                    <CollectionView x:Name="BillItemsCollection"
-                                    HeightRequest="220"
-                                    SelectionMode="None">
-
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="6" ColumnSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Label Text="{Binding ItemName}"
-                                           FontAttributes="Bold"/>
-
-                                    <Label Text="{Binding Quantity}"
-                                           Grid.Column="1"/>
-
-                                    <Label Text="{Binding Price, StringFormat='₹{0:F2}'}"
-                                           Grid.Column="2"/>
-
-                                    <Label Text="{Binding Total, StringFormat='₹{0:F2}'}"
-                                           Grid.Column="3"
-                                           FontAttributes="Bold"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                    <!-- Total -->
-                    <Grid Padding="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Text="Grand Total"
-                               FontSize="16"
-                               FontAttributes="Bold"/>
-
-                        <Label x:Name="TotalLabel"
-                               Text="₹0.00"
-                               Grid.Column="1"
+                        <Label Text="Customer"
                                FontSize="18"
                                FontAttributes="Bold"
-                               TextColor="#16A34A"/>
-                    </Grid>
+                               TextColor="#0F172A"/>
 
-                </VerticalStackLayout>
-            </Frame>
+                        <Picker x:Name="CustomerPicker"
+                                Title="Select Customer"
+                                HeightRequest="50"
+                                BackgroundColor="#F1F5F9"
+                                SelectedIndexChanged="OnCustomerSelected"/>
 
-            <!-- Actions -->
-            <Grid ColumnSpacing="12">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                        <Entry x:Name="CustomerNameEntry"
+                               Placeholder="Customer Name"
+                               HeightRequest="50"
+                               BackgroundColor="#F1F5F9"/>
 
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox x:Name="UdharCheckBox"/>
+                            <Label Text="Mark as Udhar"
+                                   Grid.Column="1"
+                                   VerticalTextAlignment="Center"
+                                   TextColor="#334155"/>
+                        </Grid>
+
+                        <DatePicker x:Name="BillDatePicker"
+                                    Date="{x:Static sys:DateTime.Now}"
+                                    BackgroundColor="#F1F5F9"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- BILL ITEMS -->
+                <Frame BackgroundColor="White" CornerRadius="18" Padding="18">
+                    <VerticalStackLayout Spacing="14">
+
+                        <Label Text="Items"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#0F172A"/>
+
+                        <Picker x:Name="CategoryPicker"
+                                Title="Select Category"
+                                SelectedIndexChanged="OnCategoryChanged"/>
+
+                        <Picker x:Name="ItemPicker"
+                                Title="Select Item"
+                                SelectedIndexChanged="OnItemChanged"/>
+
+                        <!-- ADD ITEM ROW -->
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Entry x:Name="QuantityEntry"
+                                   Placeholder="Qty"
+                                   Keyboard="Numeric"
+                                   WidthRequest="70"
+                                   BackgroundColor="#F1F5F9"/>
+
+                            <Entry x:Name="PriceEntry"
+                                   Placeholder="Price"
+                                   Keyboard="Numeric"
+                                   WidthRequest="100"
+                                   BackgroundColor="#F1F5F9"
+                                   Grid.Column="1"/>
+
+                            <Button Text="Add"
+                                    Grid.Column="2"
+                                    CornerRadius="12"
+                                    HeightRequest="48"
+                                    FontAttributes="Bold"
+                                    BackgroundColor="#2563EB"
+                                    TextColor="White"
+                                    Clicked="OnAddItemClicked"/>
+                        </Grid>
+
+                        <!-- ITEMS LIST -->
+                        <CollectionView x:Name="BillItemsCollection"
+                                        HeightRequest="220"
+                                        SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="6" ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{Binding ItemName}"
+                                               FontAttributes="Bold"/>
+
+                                        <Label Text="{Binding Quantity}"
+                                               Grid.Column="1"/>
+
+                                        <Label Text="{Binding Total, StringFormat='₹{0:F2}'}"
+                                               Grid.Column="2"
+                                               FontAttributes="Bold"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <!-- GRAND TOTAL -->
+                        <Frame BackgroundColor="#ECFDF5"
+                               CornerRadius="14"
+                               Padding="14">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="Grand Total"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#065F46"/>
+                                <Label x:Name="TotalLabel"
+                                       Text="₹0.00"
+                                       Grid.Column="1"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="#047857"/>
+                            </Grid>
+                        </Frame>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- ACTIONS -->
                 <Button Text="Save Bill"
-                        Grid.Column="0"
-                        HeightRequest="52"
+                        HeightRequest="54"
                         CornerRadius="16"
                         FontAttributes="Bold"
                         BackgroundColor="#16A34A"
                         TextColor="White"
                         Clicked="OnSaveBillClicked"/>
 
-                <Button Text="Print"
-                        Grid.Column="1"
-                        HeightRequest="52"
-                        CornerRadius="16"
-                        FontAttributes="Bold"
-                        BackgroundColor="#2563EB"
-                        TextColor="White"
-                        Clicked="OnPrintClicked"/>
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Button Text="Share"
-                        Grid.Column="2"
-                        HeightRequest="52"
-                        CornerRadius="16"
-                        FontAttributes="Bold"
-                        BackgroundColor="#E2E8F0"
-                        TextColor="#0F172A"
-                        Clicked="OnShareClicked"/>
-            </Grid>
+                    <Button Text="Print"
+                            Grid.Column="0"
+                            HeightRequest="50"
+                            CornerRadius="16"
+                            FontAttributes="Bold"
+                            BackgroundColor="#2563EB"
+                            TextColor="White"
+                            Clicked="OnPrintClicked"/>
 
+                    <Button Text="Share"
+                            Grid.Column="1"
+                            HeightRequest="50"
+                            CornerRadius="16"
+                            FontAttributes="Bold"
+                            BackgroundColor="#E5E7EB"
+                            TextColor="#0F172A"
+                            Clicked="OnShareClicked"/>
+                </Grid>
+
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

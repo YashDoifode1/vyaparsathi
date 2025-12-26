@@ -14,7 +14,8 @@
                    FontSize="26"
                    FontAttributes="Bold"
                    TextColor="#0F172A"/>
-            <Label Text="Track pending and cleared udhar payments"
+
+            <Label Text="Track pending udhar payments"
                    FontSize="14"
                    TextColor="#64748B"/>
         </VerticalStackLayout>
@@ -37,7 +38,7 @@
         <!-- Udhar List -->
         <CollectionView x:Name="UdharCollection"
                         SelectionMode="None"
-                        EmptyView="No udhar records found.">
+                        EmptyView="No pending udhar found.">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -49,7 +50,7 @@
 
                         <VerticalStackLayout Spacing="10">
 
-                            <!-- Top Row -->
+                            <!-- Name & Amount -->
                             <Grid ColumnSpacing="12">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -61,7 +62,7 @@
                                        FontAttributes="Bold"
                                        TextColor="#1E293B"/>
 
-                                <Label Text="{Binding Amount, StringFormat='₹{0:F2}'}"
+                                <Label Text="{Binding Amount, StringFormat='₹{0:N2}'}"
                                        Grid.Column="1"
                                        FontSize="18"
                                        FontAttributes="Bold"
@@ -74,24 +75,10 @@
                                    TextColor="#475569"
                                    LineBreakMode="TailTruncation"/>
 
-                            <!-- Date + Status -->
-                            <Grid ColumnSpacing="10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <Label Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}"
-                                       FontSize="12"
-                                       TextColor="#94A3B8"/>
-
-                                <Label Text="UNPAID"
-                                       Grid.Column="1"
-                                       FontSize="11"
-                                       FontAttributes="Bold"
-                                       TextColor="#DC2626"
-                                       IsVisible="{Binding IsPaid, Converter={StaticResource InverseBoolConverter}}"/>
-                            </Grid>
+                            <!-- Date -->
+                            <Label Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}"
+                                   FontSize="12"
+                                   TextColor="#94A3B8"/>
 
                             <!-- Action -->
                             <Button Text="Mark as Paid"
@@ -100,14 +87,13 @@
                                     FontAttributes="Bold"
                                     BackgroundColor="#16A34A"
                                     TextColor="White"
-                                    IsVisible="{Binding IsPaid, Converter={StaticResource InverseBoolConverter}}"
-                                    Clicked="OnMarkPaidClicked"/>
-                        </VerticalStackLayout>
+                                    Clicked="OnMarkPaidClicked"
+                                    CommandParameter="{Binding .}"/>
 
+                        </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
         </CollectionView>
 
     </VerticalStackLayout>

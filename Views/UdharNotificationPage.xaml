@@ -9,35 +9,41 @@
     <VerticalStackLayout Padding="20" Spacing="20">
 
         <!-- Header -->
-        <Label Text="Send Udhar Reminder"
-               FontSize="24"
-               FontAttributes="Bold"
-               TextColor="#1F2937"/>
+        <VerticalStackLayout Spacing="4">
+            <Label Text="Send Udhar Reminder"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   TextColor="#0F172A"/>
+
+            <Label Text="Send payment reminder to customers"
+                   FontSize="14"
+                   TextColor="#64748B"/>
+        </VerticalStackLayout>
 
         <!-- Customer Picker -->
         <Picker x:Name="CustomerPicker"
-                Title="Select Customer"/>
+                Title="Select Customer"
+                BackgroundColor="White"/>
 
-        <!-- Message Editor -->
+        <!-- Message -->
         <Editor x:Name="MessageEditor"
-                Placeholder="Enter message..."
+                Placeholder="Enter reminder message..."
                 AutoSize="TextChanges"
                 HeightRequest="120"
                 BackgroundColor="White"
                 TextColor="#111827"/>
 
         <!-- Send Button -->
-        <Button Text="Send SMS"
+        <Button Text="Send SMS Reminder"
                 BackgroundColor="#2563EB"
                 TextColor="White"
                 FontAttributes="Bold"
-                HeightRequest="50"
-                CornerRadius="12"
+                HeightRequest="52"
+                CornerRadius="16"
                 Clicked="OnSendSmsClicked"/>
 
         <!-- Status -->
         <Label x:Name="StatusLabel"
-               Text=""
                FontSize="14"
                TextColor="#DC2626"/>
 

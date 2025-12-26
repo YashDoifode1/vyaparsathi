@@ -4,10 +4,12 @@ namespace vyaparsathi.Views;
 
 public partial class ReportPage : ContentPage
 {
+    private List<Bill> _allBills = new();
+    private List<string> _customers = new();
+
     public ReportPage()
     {
         InitializeComponent();
-
         FromDatePicker.Date = DateTime.Today.AddDays(-30);
         ToDatePicker.Date = DateTime.Today;
     }
@@ -15,10 +17,36 @@ public partial class ReportPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        await LoadDataAsync();
         await LoadReportAsync();
     }
 
+    private async Task LoadDataAsync()
+    {
+        _allBills = await App.Database.GetBillsAsync();
+
+        foreach (var bill in _allBills)
+        {
+            var items = await App.Database.GetBillItemsAsync(bill.Id);
+            bill.TotalAmount = items.Sum(i => i.Total);
+        }
+
+        // Populate Customer Picker
+        _customers = _allBills.Select(b => b.CustomerName)
+                              .Distinct()
+                              .OrderBy(c => c)
+                              .ToList();
+
+        CustomerPicker.ItemsSource = _customers;
+        CustomerPicker.SelectedIndex = -1;
+    }
+
     private async void OnApplyFilterClicked(object sender, EventArgs e)
+    {
+        await LoadReportAsync();
+    }
+
+    private async void OnFilterChanged(object sender, EventArgs e)
     {
         await LoadReportAsync();
     }
@@ -28,32 +56,36 @@ public partial class ReportPage : ContentPage
         var from = FromDatePicker.Date.Date;
         var to = ToDatePicker.Date.Date.AddDays(1).AddSeconds(-1);
 
-        // Bills
-        var bills = await App.Database.GetBillsAsync();
-        var filteredBills = bills
-            .Where(b => b.Date >= from && b.Date <= to)
+        var selectedCustomer = CustomerPicker.SelectedItem as string;
+
+        // Filter bills
+        var filteredBills = _allBills
+            .Where(b => b.Date >= from && b.Date <= to &&
+                        (string.IsNullOrEmpty(selectedCustomer) || b.CustomerName == selectedCustomer))
             .ToList();
 
         decimal totalSales = filteredBills.Sum(b => b.TotalAmount);
 
+        // Purchases (no customer filter)
+        var purchases = await App.Database.GetPurchasesAsync();
+        decimal totalPurchases = purchases
+            .Where(p => p.Date >= from && p.Date <= to)
+            .Sum(p => p.TotalAmount);
+
         // Udhar
         var udhars = await App.Database.GetUdharsAsync();
         decimal totalUdhar = udhars
-            .Where(u => u.Date >= from && u.Date <= to && !u.IsPaid)
+            .Where(u => u.Date >= from && u.Date <= to &&
+                        !u.IsPaid &&
+                        (string.IsNullOrEmpty(selectedCustomer) || u.CustomerName == selectedCustomer))
             .Sum(u => u.Amount);
 
-        // Purchase Cost (from Item LandingPrice * stock sold approx)
-        var items = await App.Database.GetItemsAsync();
-        decimal purchaseCost = items.Sum(i => i.LandingPrice * i.StockQuantity);
+        decimal profit = totalSales - totalPurchases;
 
-        // Profit
-        decimal profit = totalSales - purchaseCost;
-
-        // UI Update
-        TotalSalesLabel.Text = $"₹{totalSales:N2}";
-        PurchaseCostLabel.Text = $"₹{purchaseCost:N2}";
-        ProfitLabel.Text = $"₹{profit:N2}";
-        UdharLabel.Text = $"₹{totalUdhar:N2}";
-        BillsCountLabel.Text = filteredBills.Count.ToString();
+        // Update UI
+        TotalSalesLabel.Text = $"₹{totalSales:N0}";
+        PurchaseCostLabel.Text = $"₹{totalPurchases:N0}";
+        ProfitLabel.Text = $"₹{profit:N0}";
+        UdharLabel.Text = $"₹{totalUdhar:N0}";
     }
 }

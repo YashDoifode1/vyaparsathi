@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Shell
+    x:Class="vyaparsathi.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:vyaparsathi.Views"
-    x:Class="vyaparsathi.AppShell"
     FlyoutBehavior="Flyout"
-    BackgroundColor="#FFFFFF">
+    BackgroundColor="White">
 
     <!-- ===================== -->
-    <!-- Flyout Header -->
+    <!-- HIDDEN STARTUP PAGE -->
+    <!-- ===================== -->
+    <ShellContent
+        Route="startup"
+        ContentTemplate="{DataTemplate views:StartupPage}"
+        IsVisible="False" />
+
+    <!-- ===================== -->
+    <!-- FLYOUT HEADER -->
     <!-- ===================== -->
     <Shell.FlyoutHeader>
         <Grid BackgroundColor="#2563EB" Padding="20">
@@ -18,8 +26,8 @@
                        FontAttributes="Bold"
                        TextColor="White"/>
                 <Label Text="Manage your business efficiently"
-                       FontSize="14"
-                       TextColor="White"/>
+                       FontSize="13"
+                       TextColor="#E5E7EB"/>
             </VerticalStackLayout>
         </Grid>
     </Shell.FlyoutHeader>
@@ -27,104 +35,98 @@
     <!-- ===================== -->
     <!-- DASHBOARD -->
     <!-- ===================== -->
-    <FlyoutItem Title="Dashboard" Icon="home.png">
-        <ShellContent
-            Title="Dashboard"
-            ContentTemplate="{DataTemplate views:DashboardPage}" />
+    <FlyoutItem Title="Dashboard" Icon="dashboard.png">
+        <ShellContent Route="dashboard"
+                      ContentTemplate="{DataTemplate views:DashboardPage}" />
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- BILLING -->
     <!-- ===================== -->
     <FlyoutItem Title="Billing" Icon="billing.png">
-        <ShellContent
-            Title="Create Bill"
-            ContentTemplate="{DataTemplate views:BillingPage}" />
-        <ShellContent
-            Title="Billing History"
-            ContentTemplate="{DataTemplate views:BillingHistoryPage}" />
+        <Tab Title="Create Bill">
+            <ShellContent ContentTemplate="{DataTemplate views:BillingPage}" />
+        </Tab>
+        <Tab Title="Billing History">
+            <ShellContent ContentTemplate="{DataTemplate views:BillingHistoryPage}" />
+        </Tab>
+    </FlyoutItem>
+
+    <!-- ===================== -->
+    <!-- PURCHASE -->
+    <FlyoutItem Title="Purchase" Icon="purchase.png">
+        <Tab Title="New Purchase">
+            <ShellContent ContentTemplate="{DataTemplate views:PurchasePage}" />
+        </Tab>
+        <Tab Title="Purchase History">
+            <ShellContent ContentTemplate="{DataTemplate views:PurchaseHistoryPage}" />
+        </Tab>
+    </FlyoutItem>
+
+    <!-- ===================== -->
+    <!-- VENDORS -->
+    <!-- ===================== -->
+    <FlyoutItem Title="Vendors" Icon="vendors.png">
+        <Tab Title="Vendors">
+            <ShellContent ContentTemplate="{DataTemplate views:VendorPage}" />
+        </Tab>
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- STOCK -->
     <!-- ===================== -->
     <FlyoutItem Title="Stock" Icon="stock.png">
-        <ShellContent
-            Title="Stock Management"
-            ContentTemplate="{DataTemplate views:StockPage}" />
-    </FlyoutItem>
-
-    <!-- ===================== -->
-    <!-- PURCHASE & VENDORS -->
-    <!-- ===================== -->
-    <FlyoutItem Title="Purchase" Icon="purchase.png">
-
-        <ShellContent
-            Title="New Purchase"
-            ContentTemplate="{DataTemplate views:PurchasePage}" />
-
-        <ShellContent
-            Title="Purchase History"
-            ContentTemplate="{DataTemplate views:PurchaseHistoryPage}" />
-
-        <ShellContent
-            Title="Vendors"
-            ContentTemplate="{DataTemplate views:VendorPage}" />
-
+        <Tab Title="Stock Management">
+            <ShellContent ContentTemplate="{DataTemplate views:StockPage}" />
+        </Tab>
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- UDHAR -->
     <!-- ===================== -->
-    <FlyoutItem Title="Udhar"
-                Icon="udhar.png"
-                Route="udhar">
-        <ShellContent
-            Title="Add Udhar"
-            Route="udhar_add"
-            ContentTemplate="{DataTemplate views:UdharPage}" />
-        <ShellContent
-            Title="Udhar History"
-            Route="udhar_history"
-            ContentTemplate="{DataTemplate views:UdharHistoryPage}" />
-        <ShellContent
-            Title="Udhar Notification"
-            Route="udhar_notification"
-            ContentTemplate="{DataTemplate views:UdharNotificationPage}" />
+    <FlyoutItem Title="Udhar" Icon="udhar.png">
+        <Tab Title="Dashboard">
+            <ShellContent ContentTemplate="{DataTemplate views:UdharDashboardPage}" />
+        </Tab>
+        <Tab Title="Pending">
+            <ShellContent ContentTemplate="{DataTemplate views:UdharPage}" />
+        </Tab>
+        <Tab Title="History">
+            <ShellContent ContentTemplate="{DataTemplate views:UdharHistoryPage}" />
+        </Tab>
+        <Tab Title="Notification">
+            <ShellContent ContentTemplate="{DataTemplate views:UdharNotificationPage}" />
+        </Tab>
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- CUSTOMERS -->
     <!-- ===================== -->
     <FlyoutItem Title="Customers" Icon="customers.png">
-        <ShellContent
-            Title="Customers"
-            ContentTemplate="{DataTemplate views:CustomersPage}" />
+        <Tab Title="Customers">
+            <ShellContent ContentTemplate="{DataTemplate views:CustomersPage}" />
+        </Tab>
     </FlyoutItem>
 
     <!-- ===================== -->
-    <!-- MASTER DATA -->
+    <!-- REPORTS -->
     <!-- ===================== -->
-    <FlyoutItem Title="Master Data" Icon="database.png">
-        <ShellContent
-            Title="Categories"
-            ContentTemplate="{DataTemplate views:AddCategoryPage}" />
-        <ShellContent
-            Title="Items"
-            ContentTemplate="{DataTemplate views:AddItemPage}" />
+    <FlyoutItem Title="Reports" Icon="report.png">
+        <Tab Title="Sales  Profit">
+            <ShellContent ContentTemplate="{DataTemplate views:ReportPage}" />
+        </Tab>
     </FlyoutItem>
 
     <!-- ===================== -->
     <!-- SETTINGS -->
     <!-- ===================== -->
     <FlyoutItem Title="Settings" Icon="settings.png">
-        <ShellContent
-            Title="Settings"
-            ContentTemplate="{DataTemplate views:SettingsPage}" />
-        <ShellContent
-            Title="Backup &amp; Restore"
-            ContentTemplate="{DataTemplate views:BackupRestorePage}" />
+        <Tab Title="Settings">
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
+        </Tab>
+        <Tab Title="Backup Restore">
+            <ShellContent ContentTemplate="{DataTemplate views:BackupRestorePage}" />
+        </Tab>
     </FlyoutItem>
-    
 
 </Shell>

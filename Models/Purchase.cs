@@ -11,5 +11,12 @@ public class Purchase
     public string VendorName { get; set; }
 
     public DateTime Date { get; set; }
+
+    // Extra charges on the whole purchase
+    public decimal Transport { get; set; }
+    public decimal Tax { get; set; }
+    public decimal OtherCharges { get; set; }
+
+    // Total including items + charges
     public decimal TotalAmount { get; set; }
 }

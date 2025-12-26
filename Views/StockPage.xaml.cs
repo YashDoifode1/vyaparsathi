@@ -21,6 +21,7 @@ public partial class StockPage : ContentPage
     private async void LoadCategories()
     {
         _categories = await _database.GetCategoriesAsync();
+
         CategoryPicker.ItemsSource = _categories;
         CategoryPicker.ItemDisplayBinding = new Binding("Name");
     }
@@ -72,6 +73,7 @@ public partial class StockPage : ContentPage
         StockEntry.Text = string.Empty;
         PriceEntry.Text = string.Empty;
         ItemPicker.SelectedItem = null;
+        CategoryPicker.SelectedItem = null;
 
         LoadDashboard();
     }
@@ -85,6 +87,7 @@ public partial class StockPage : ContentPage
         TotalItemsLabel.Text = allItems.Count.ToString();
         TotalQuantityLabel.Text = allItems.Sum(i => i.StockQuantity).ToString();
         LowStockLabel.Text = allItems.Count(i => i.StockQuantity < 10).ToString();
+        OutOfStockLabel.Text = allItems.Count(i => i.StockQuantity == 0).ToString();
 
         var totalValue = allItems.Sum(i => i.SellingPrice * i.StockQuantity);
         TotalInventoryValueLabel.Text = $"₹{totalValue:0.##}";

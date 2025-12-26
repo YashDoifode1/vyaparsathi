@@ -19,6 +19,7 @@ public partial class PurchasePage : ContentPage
 
         LoadVendors();
         LoadCategories();
+        UpdateTotal();
     }
 
     private async void LoadVendors()
@@ -30,7 +31,6 @@ public partial class PurchasePage : ContentPage
     private void OnVendorSelected(object sender, EventArgs e)
     {
         if (VendorPicker.SelectedIndex < 0) return;
-
         _selectedVendor = _vendors[VendorPicker.SelectedIndex];
     }
 
@@ -45,18 +45,15 @@ public partial class PurchasePage : ContentPage
         if (CategoryPicker.SelectedIndex < 0) return;
 
         var selectedCategory = _categories[CategoryPicker.SelectedIndex];
-
         _items = (await App.Database.GetItemsAsync())
-            .Where(i => i.CategoryId == selectedCategory.Id)
-            .ToList();
-
+                 .Where(i => i.CategoryId == selectedCategory.Id)
+                 .ToList();
         ItemPicker.ItemsSource = _items.Select(i => i.Name).ToList();
     }
 
     private void OnItemChanged(object sender, EventArgs e)
     {
         if (ItemPicker.SelectedIndex < 0) return;
-
         PriceEntry.Text = _items[ItemPicker.SelectedIndex].LandingPrice.ToString("F2");
     }
 
@@ -76,8 +73,8 @@ public partial class PurchasePage : ContentPage
         var purchaseItem = new PurchaseItem
         {
             ItemId = selectedItem.Id,
-            ItemName = selectedItem.Name,
-            Quantity = (int)qtyDecimal,   // ✅ Explicit cast
+            Name = selectedItem.Name, // Display name
+            Quantity = qtyDecimal,
             Price = priceDecimal
         };
 
@@ -91,7 +88,14 @@ public partial class PurchasePage : ContentPage
 
     private void UpdateTotal()
     {
-        TotalLabel.Text = $"₹{_purchaseItems.Sum(i => i.Total):F2}";
+        decimal itemsTotal = _purchaseItems.Sum(i => i.Total);
+
+        decimal transport = decimal.TryParse(TransportEntry.Text, out var t) ? t : 0;
+        decimal tax = decimal.TryParse(TaxEntry.Text, out var tx) ? tx : 0;
+        decimal other = decimal.TryParse(OtherChargesEntry.Text, out var o) ? o : 0;
+
+        decimal grandTotal = itemsTotal + transport + tax + other;
+        TotalLabel.Text = $"₹{grandTotal:F2}";
     }
 
     private async void OnSavePurchaseClicked(object sender, EventArgs e)
@@ -102,31 +106,42 @@ public partial class PurchasePage : ContentPage
             return;
         }
 
+        // Parse extra charges
+        decimal transport = decimal.TryParse(TransportEntry.Text, out var t) ? t : 0;
+        decimal tax = decimal.TryParse(TaxEntry.Text, out var tx) ? tx : 0;
+        decimal other = decimal.TryParse(OtherChargesEntry.Text, out var o) ? o : 0;
+
         var purchase = new Purchase
         {
             VendorId = _selectedVendor.Id,
-            Date = PurchaseDatePicker.Date
+            VendorName = _selectedVendor.Name,
+            Date = PurchaseDatePicker.Date,
+            Transport = transport,
+            Tax = tax,
+            OtherCharges = other,
+            TotalAmount = _purchaseItems.Sum(i => i.Total) + transport + tax + other
         };
 
         await App.Database.SavePurchaseAsync(purchase);
 
+        // Save items
         foreach (var item in _purchaseItems)
         {
             item.PurchaseId = purchase.Id;
+            await App.Database.SavePurchaseItemAsync(item);
 
             // Update stock
             var dbItem = await App.Database.GetItemByIdAsync(item.ItemId);
             if (dbItem != null)
             {
-                dbItem.StockQuantity += item.Quantity; // Add purchased quantity
+                dbItem.StockQuantity += (int)item.Quantity;
                 await App.Database.SaveItemAsync(dbItem);
             }
-
-            await App.Database.SavePurchaseItemAsync(item);
         }
 
         await DisplayAlert("Success", "Purchase saved successfully.", "OK");
 
+        // Reset form
         _purchaseItems.Clear();
         UpdateTotal();
         VendorPicker.SelectedIndex = -1;
@@ -134,5 +149,9 @@ public partial class PurchasePage : ContentPage
         ItemPicker.SelectedIndex = -1;
         QuantityEntry.Text = "";
         PriceEntry.Text = "";
+        TransportEntry.Text = "";
+        TaxEntry.Text = "";
+        OtherChargesEntry.Text = "";
     }
+
 }

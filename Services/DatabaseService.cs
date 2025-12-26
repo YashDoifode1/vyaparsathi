@@ -11,7 +11,6 @@ public class DatabaseService
     {
         _database = new SQLiteAsyncConnection(dbPath);
 
-        // Create Tables
         _database.CreateTableAsync<Vendor>().Wait();
         _database.CreateTableAsync<Purchase>().Wait();
         _database.CreateTableAsync<PurchaseItem>().Wait();
@@ -114,7 +113,9 @@ public class DatabaseService
     }
 
     public Task<List<PurchaseItem>> GetPurchaseItemsAsync(int purchaseId) =>
-        _database.Table<PurchaseItem>().Where(i => i.PurchaseId == purchaseId).ToListAsync();
+        _database.Table<PurchaseItem>()
+            .Where(i => i.PurchaseId == purchaseId)
+            .ToListAsync();
 
     // =======================
     // BILL
@@ -143,38 +144,9 @@ public class DatabaseService
     }
 
     public Task<List<BillItem>> GetBillItemsAsync(int billId) =>
-        _database.Table<BillItem>().Where(i => i.BillId == billId).ToListAsync();
-
-    public async Task<decimal> GetTotalSalesAsync(DateTime from, DateTime to)
-    {
-        var bills = await _database.Table<Bill>()
-            .Where(b => b.Date >= from && b.Date <= to)
+        _database.Table<BillItem>()
+            .Where(i => i.BillId == billId)
             .ToListAsync();
-
-        if (!bills.Any()) return 0;
-
-        var billIds = bills.Select(b => b.Id).ToList();
-        var billItems = await _database.Table<BillItem>()
-            .Where(bi => billIds.Contains(bi.BillId))
-            .ToListAsync();
-
-        return billItems.Sum(i => i.Quantity * i.Price);
-    }
-
-    public async Task<decimal> GetTotalPurchaseValueAsync()
-    {
-        var items = await GetItemsAsync();
-        return items.Sum(i => i.LandingPrice * i.StockQuantity);
-    }
-
-    public async Task<decimal> GetTotalUdharAsync(DateTime from, DateTime to)
-    {
-        var udhars = await _database.Table<Udhar>()
-            .Where(u => u.Date >= from && u.Date <= to && !u.IsPaid)
-            .ToListAsync();
-
-        return udhars.Sum(u => u.Amount);
-    }
 
     // =======================
     // UDHAR
@@ -190,14 +162,27 @@ public class DatabaseService
 
     public async Task<List<Udhar>> GetUdharsAsync()
     {
-        var udhars = await _database.Table<Udhar>().OrderByDescending(u => u.Date).ToListAsync();
+        var udhars = await _database.Table<Udhar>()
+            .OrderByDescending(u => u.Date)
+            .ToListAsync();
+
         var customers = await GetCustomersAsync();
 
         foreach (var u in udhars)
-            u.CustomerName = customers.FirstOrDefault(c => c.Id == u.CustomerId)?.Name ?? "Unknown";
+        {
+            u.CustomerName = customers
+                .FirstOrDefault(c => c.Id == u.CustomerId)?.Name ?? "Unknown";
+        }
 
         return udhars;
     }
+
+    // ✅ REQUIRED FOR CUSTOMER DETAILS PAGE
+    public Task<List<Udhar>> GetUdharsByCustomerAsync(int customerId) =>
+        _database.Table<Udhar>()
+            .Where(u => u.CustomerId == customerId)
+            .OrderByDescending(u => u.Date)
+            .ToListAsync();
 
     public Task<int> DeleteUdharAsync(Udhar udhar) =>
         _database.DeleteAsync(udhar);
@@ -207,6 +192,32 @@ public class DatabaseService
         udhar.IsPaid = true;
         return _database.UpdateAsync(udhar);
     }
+
+    // =======================
+    // CUSTOMER
+    // =======================
+    public Task<int> SaveCustomerAsync(Customer customer)
+    {
+        customer.UpdatedAt = DateTime.UtcNow;
+        if (customer.Id != 0)
+            return _database.UpdateAsync(customer);
+
+        customer.CreatedAt = DateTime.UtcNow;
+        return _database.InsertAsync(customer);
+    }
+
+    public Task<List<Customer>> GetCustomersAsync() =>
+        _database.Table<Customer>()
+            .OrderByDescending(c => c.CreatedAt)
+            .ToListAsync();
+
+    // ✅ REQUIRED FOR CUSTOMER DETAILS PAGE
+    public Task<Customer> GetCustomerByIdAsync(int id) =>
+        _database.Table<Customer>()
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+    public Task<int> DeleteCustomerAsync(Customer customer) =>
+        _database.DeleteAsync(customer);
 
     // =======================
     // BUSINESS PROFILE
@@ -223,25 +234,6 @@ public class DatabaseService
 
     public Task<BusinessProfile> GetBusinessProfileAsync() =>
         _database.Table<BusinessProfile>().FirstOrDefaultAsync();
-
-    // =======================
-    // CUSTOMERS
-    // =======================
-    public Task<int> SaveCustomerAsync(Customer customer)
-    {
-        customer.UpdatedAt = DateTime.UtcNow;
-        if (customer.Id != 0)
-            return _database.UpdateAsync(customer);
-
-        customer.CreatedAt = DateTime.UtcNow;
-        return _database.InsertAsync(customer);
-    }
-
-    public Task<List<Customer>> GetCustomersAsync() =>
-        _database.Table<Customer>().OrderByDescending(c => c.CreatedAt).ToListAsync();
-
-    public Task<int> DeleteCustomerAsync(Customer customer) =>
-        _database.DeleteAsync(customer);
 
     // =======================
     // SMS SETTINGS
@@ -274,7 +266,6 @@ public class DatabaseService
         await _database.DropTableAsync<BusinessProfile>();
         await _database.DropTableAsync<SmsSettings>();
 
-        // Recreate tables
         await _database.CreateTableAsync<Bill>();
         await _database.CreateTableAsync<BillItem>();
         await _database.CreateTableAsync<Item>();

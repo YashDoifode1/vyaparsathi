@@ -4,149 +4,140 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="vyaparsathi.Views.StockPage"
     Title="Stock"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="#F3F4F6">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="24">
+        <VerticalStackLayout Spacing="20">
 
-            <!-- Header -->
-            <VerticalStackLayout Spacing="4">
-                <Label Text="Stock Management"
-                       FontSize="26"
-                       FontAttributes="Bold"
-                       TextColor="#0F172A"/>
-                <Label Text="Overview and inventory update"
-                       FontSize="14"
-                       TextColor="#64748B"/>
-            </VerticalStackLayout>
+            <!-- HEADER
+            <Grid BackgroundColor="#2563EB" Padding="20">
+                <VerticalStackLayout>
+                    <Label Text="Stock"
+                           FontSize="26"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+                    <Label Text="Stock Management"
+                           FontSize="14"
+                           TextColor="#DBEAFE"/>
+                </VerticalStackLayout>
+            </Grid> -->
 
-            <!-- Dashboard -->
-            <Grid ColumnSpacing="12" RowSpacing="12">
+            <!-- DASHBOARD SUMMARY CARDS -->
+            <Grid ColumnSpacing="14" RowSpacing="14" Padding="20,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Total Categories -->
-                <Frame BackgroundColor="#4F46E5"
-                       CornerRadius="16"
-                       Padding="16"
-                       HasShadow="True">
+                <Frame BackgroundColor="#E0F7FA" CornerRadius="16" Padding="14">
                     <VerticalStackLayout>
                         <Label Text="Total Categories"
-                               FontSize="14"
-                               TextColor="White"/>
+                               FontSize="12"
+                               TextColor="#006064"/>
                         <Label x:Name="TotalCategoriesLabel"
-                               Text="0"
-                               FontSize="24"
+                               FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="White"/>
+                               TextColor="#004D40"/>
                     </VerticalStackLayout>
                 </Frame>
 
                 <!-- Total Items -->
-                <Frame Grid.Column="1"
-                       BackgroundColor="#2563EB"
-                       CornerRadius="16"
-                       Padding="16"
-                       HasShadow="True">
+                <Frame Grid.Column="1" BackgroundColor="#FFF3E0" CornerRadius="16" Padding="14">
                     <VerticalStackLayout>
                         <Label Text="Total Items"
-                               FontSize="14"
-                               TextColor="White"/>
+                               FontSize="12"
+                               TextColor="#E65100"/>
                         <Label x:Name="TotalItemsLabel"
-                               Text="0"
-                               FontSize="24"
+                               FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="White"/>
+                               TextColor="#BF360C"/>
                     </VerticalStackLayout>
                 </Frame>
 
                 <!-- Total Quantity -->
-                <Frame Grid.Row="1"
-                       BackgroundColor="#16A34A"
-                       CornerRadius="16"
-                       Padding="16"
-                       HasShadow="True">
+                <Frame Grid.Column="2" BackgroundColor="#E8F5E9" CornerRadius="16" Padding="14">
                     <VerticalStackLayout>
                         <Label Text="Total Quantity"
-                               FontSize="14"
-                               TextColor="White"/>
+                               FontSize="12"
+                               TextColor="#2E7D32"/>
                         <Label x:Name="TotalQuantityLabel"
-                               Text="0"
-                               FontSize="24"
+                               FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="White"/>
+                               TextColor="#1B5E20"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Low Stock Items -->
-                <Frame Grid.Row="1"
-                       Grid.Column="1"
-                       BackgroundColor="#DC2626"
-                       CornerRadius="16"
-                       Padding="16"
-                       HasShadow="True">
+                <!-- Low Stock -->
+                <Frame Grid.Row="1" BackgroundColor="#DCFCE7" CornerRadius="16" Padding="14">
                     <VerticalStackLayout>
-                        <Label Text="Low Stock (&lt;10)"
-                               FontSize="14"
-                               TextColor="White"/>
+                        <Label Text="Low Stock"
+                               FontSize="12"
+                               TextColor="#166534"/>
                         <Label x:Name="LowStockLabel"
-                               Text="0"
-                               FontSize="24"
+                               FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="White"/>
+                               TextColor="#14532D"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Out of Stock -->
+                <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#FEE2E2" CornerRadius="16" Padding="14">
+                    <VerticalStackLayout>
+                        <Label Text="Out of Stock"
+                               FontSize="12"
+                               TextColor="#991B1B"/>
+                        <Label x:Name="OutOfStockLabel"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#7F1D1D"/>
                     </VerticalStackLayout>
                 </Frame>
 
                 <!-- Inventory Value -->
-                <Frame Grid.Row="2"
-                       Grid.ColumnSpan="2"
-                       BackgroundColor="#F59E0B"
-                       CornerRadius="16"
-                       Padding="16"
-                       HasShadow="True">
+                <Frame Grid.Row="1" Grid.Column="2" BackgroundColor="#E0F2FE" CornerRadius="16" Padding="14">
                     <VerticalStackLayout>
-                        <Label Text="Total Inventory Value"
-                               FontSize="14"
-                               TextColor="White"/>
+                        <Label Text="Inventory Value"
+                               FontSize="12"
+                               TextColor="#0369A1"/>
                         <Label x:Name="TotalInventoryValueLabel"
-                               Text="₹0.00"
-                               FontSize="24"
+                               FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="White"/>
+                               TextColor="#0C4A6E"/>
                     </VerticalStackLayout>
                 </Frame>
             </Grid>
 
-            <!-- Category-wise Stock List -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="16"
-                   Padding="16"
-                   HasShadow="True">
-                <VerticalStackLayout>
-                    <Label Text="Category-wise Distribution"
+            <!-- ITEM LIST -->
+            <Frame BackgroundColor="White" CornerRadius="18" Padding="16" Margin="20,0">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Items"
                            FontSize="18"
                            FontAttributes="Bold"
                            TextColor="#0F172A"/>
-                    <CollectionView x:Name="CategoryStockCollection"
-                                    HeightRequest="220"
+
+                    <CollectionView x:Name="ItemsCollection"
                                     SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="6" ColumnSpacing="12">
+                                <Grid Padding="8" ColumnSpacing="12">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Text="{Binding Name}" FontAttributes="Bold"/>
-                                    <Label Text="{Binding Quantity}" Grid.Column="1"/>
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold"
+                                           TextColor="#0F172A"/>
+
+                                    <Label Text="{Binding StockQuantity, StringFormat='In Stock: {0}'}"
+                                           Grid.Column="1"
+                                           TextColor="#2563EB"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -154,43 +145,67 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Stock Form -->
-            <Frame BackgroundColor="White"
-                   CornerRadius="18"
-                   Padding="18"
-                   HasShadow="True">
+            <!-- CATEGORY-WISE STOCK -->
+            <Frame BackgroundColor="White" CornerRadius="18" Padding="16" Margin="20,0">
+                <VerticalStackLayout>
+                    <Label Text="Category-wise Stock"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#0F172A"/>
+                    <CollectionView x:Name="CategoryStockCollection"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="8" ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                <VerticalStackLayout Spacing="18">
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold"
+                                           TextColor="#0F172A"/>
+
+                                    <Label Text="{Binding Quantity, StringFormat='Stock: {0}'}"
+                                           Grid.Column="1"
+                                           TextColor="#2563EB"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- UPDATE STOCK -->
+            <Frame BackgroundColor="White" CornerRadius="18" Padding="18" Margin="20,0">
+                <VerticalStackLayout Spacing="16">
 
                     <Label Text="Update Stock"
                            FontSize="18"
                            FontAttributes="Bold"
                            TextColor="#0F172A"/>
 
-                    <!-- Category -->
+                    <!-- Category Picker -->
                     <Picker x:Name="CategoryPicker"
-                            Title="Select category"
+                            Title="Select Category"
                             SelectedIndexChanged="OnCategoryChanged"/>
 
-                    <!-- Item -->
+                    <!-- Item Picker -->
                     <Picker x:Name="ItemPicker"
-                            Title="Select item"
+                            Title="Select Item"
                             SelectedIndexChanged="OnItemChanged"/>
 
-                    <!-- Price -->
                     <Entry x:Name="PriceEntry"
                            Placeholder="Selling Price"
                            IsReadOnly="True"
                            BackgroundColor="#F1F5F9"/>
 
-                    <!-- Quantity -->
                     <Entry x:Name="StockEntry"
-                           Placeholder="Enter quantity to add"
-                           Keyboard="Numeric"
-                           BackgroundColor="#F8FAFC"/>
+                           Placeholder="Enter quantity"
+                           Keyboard="Numeric"/>
 
                     <Button Text="Save Stock"
-                            HeightRequest="54"
+                            HeightRequest="52"
                             CornerRadius="16"
                             FontAttributes="Bold"
                             BackgroundColor="#2563EB"

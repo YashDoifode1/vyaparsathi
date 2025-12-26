@@ -13,9 +13,17 @@ public class Udhar
 
     public string Notes { get; set; }
 
+    /// <summary>
+    /// Date when udhar was created
+    /// </summary>
     public DateTime Date { get; set; }
 
-    public bool IsPaid { get; set; }  // ✅ NEW
+    /// <summary>
+    /// Automatically set to Date + 7 days
+    /// </summary>
+    public DateTime DueDate { get; set; }
+
+    public bool IsPaid { get; set; }
 
     [Ignore]
     public string CustomerName { get; set; }

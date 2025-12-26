@@ -7,57 +7,54 @@
     BackgroundColor="#F3F4F6">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="22">
+        <VerticalStackLayout Padding="18" Spacing="18">
 
             <!-- Header -->
-            <VerticalStackLayout Spacing="4">
-                <Label Text="Business Reports"
-                       FontSize="26"
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Profit &amp; Sales Report"
+                       FontSize="24"
                        FontAttributes="Bold"
                        TextColor="#0F172A" />
-                <Label Text="Analyze sales, purchase, profit and udhar"
-                       FontSize="14"
+                <Label Text="Track business performance"
+                       FontSize="13"
                        TextColor="#64748B" />
             </VerticalStackLayout>
 
-            <!-- Date Filters -->
+            <!-- Filters -->
             <Frame BackgroundColor="White"
-                   CornerRadius="18"
-                   Padding="16"
+                   CornerRadius="16"
+                   Padding="14"
                    HasShadow="True">
 
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="Filter by Date Range"
-                           FontAttributes="Bold"
-                           FontSize="14" />
+                <VerticalStackLayout Spacing="10">
+                    <!-- Customer Picker -->
+                    <Picker x:Name="CustomerPicker"
+                            Title="Select Customer"
+                            SelectedIndexChanged="OnFilterChanged"/>
 
-                    <Grid ColumnSpacing="12">
+                    <Grid ColumnSpacing="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <DatePicker x:Name="FromDatePicker"
-                                    Grid.Column="0" />
-
-                        <DatePicker x:Name="ToDatePicker"
-                                    Grid.Column="1" />
+                        <DatePicker x:Name="FromDatePicker" Grid.Column="0"/>
+                        <DatePicker x:Name="ToDatePicker" Grid.Column="1"/>
                     </Grid>
 
-                    <Button Text="Apply Filter"
-                            HeightRequest="44"
-                            CornerRadius="14"
+                    <Button Text="Apply"
+                            HeightRequest="42"
+                            CornerRadius="12"
                             FontAttributes="Bold"
                             BackgroundColor="#2563EB"
                             TextColor="White"
-                            Clicked="OnApplyFilterClicked" />
+                            Clicked="OnApplyFilterClicked"/>
                 </VerticalStackLayout>
             </Frame>
 
             <!-- KPI Cards -->
-            <Grid ColumnSpacing="16" RowSpacing="16">
+            <Grid ColumnSpacing="14" RowSpacing="14">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -66,86 +63,61 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Total Sales -->
+                <!-- Total Profit -->
                 <Frame Grid.Row="0" Grid.Column="0"
-                       CornerRadius="18"
+                       CornerRadius="16"
                        BackgroundColor="White"
-                       Padding="18">
+                       Padding="16">
                     <VerticalStackLayout>
-                        <Label Text="Total Sales"
-                               FontSize="13"
-                               TextColor="#6B7280"/>
-                        <Label x:Name="TotalSalesLabel"
-                               FontSize="24"
+                        <Label Text="Total Profit" FontSize="12" TextColor="#6B7280"/>
+                        <Label x:Name="ProfitLabel"
+                               FontSize="22"
                                FontAttributes="Bold"
                                TextColor="#16A34A"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Purchase Cost -->
+                <!-- Total Sales -->
                 <Frame Grid.Row="0" Grid.Column="1"
-                       CornerRadius="18"
+                       CornerRadius="16"
                        BackgroundColor="White"
-                       Padding="18">
+                       Padding="16">
                     <VerticalStackLayout>
-                        <Label Text="Total Purchase Cost"
-                               FontSize="13"
-                               TextColor="#6B7280"/>
-                        <Label x:Name="PurchaseCostLabel"
-                               FontSize="24"
-                               FontAttributes="Bold"
-                               TextColor="#DC2626"/>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- Profit -->
-                <Frame Grid.Row="1" Grid.Column="0"
-                       CornerRadius="18"
-                       BackgroundColor="White"
-                       Padding="18">
-                    <VerticalStackLayout>
-                        <Label Text="Gross Profit"
-                               FontSize="13"
-                               TextColor="#6B7280"/>
-                        <Label x:Name="ProfitLabel"
-                               FontSize="24"
+                        <Label Text="Total Sales" FontSize="12" TextColor="#6B7280"/>
+                        <Label x:Name="TotalSalesLabel"
+                               FontSize="22"
                                FontAttributes="Bold"
                                TextColor="#2563EB"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Udhar -->
+                <!-- Total Purchases -->
+                <Frame Grid.Row="1" Grid.Column="0"
+                       CornerRadius="16"
+                       BackgroundColor="White"
+                       Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total Purchases" FontSize="12" TextColor="#6B7280"/>
+                        <Label x:Name="PurchaseCostLabel"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="#F97316"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Total Udhar -->
                 <Frame Grid.Row="1" Grid.Column="1"
-                       CornerRadius="18"
+                       CornerRadius="16"
                        BackgroundColor="White"
-                       Padding="18">
+                       Padding="16">
                     <VerticalStackLayout>
-                        <Label Text="Total Udhar"
-                               FontSize="13"
-                               TextColor="#6B7280"/>
+                        <Label Text="Total Udhar" FontSize="12" TextColor="#6B7280"/>
                         <Label x:Name="UdharLabel"
-                               FontSize="24"
+                               FontSize="22"
                                FontAttributes="Bold"
-                               TextColor="#F59E0B"/>
+                               TextColor="#16A34A"/>
                     </VerticalStackLayout>
                 </Frame>
-
-                <!-- Bills -->
-                <Frame Grid.Row="2" Grid.ColumnSpan="2"
-                       CornerRadius="18"
-                       BackgroundColor="White"
-                       Padding="18">
-                    <VerticalStackLayout>
-                        <Label Text="Total Bills"
-                               FontSize="13"
-                               TextColor="#6B7280"/>
-                        <Label x:Name="BillsCountLabel"
-                               FontSize="24"
-                               FontAttributes="Bold"
-                               TextColor="#0F172A"/>
-                    </VerticalStackLayout>
-                </Frame>
-
             </Grid>
 
         </VerticalStackLayout>
